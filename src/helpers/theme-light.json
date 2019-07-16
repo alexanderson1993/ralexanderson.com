@@ -1,0 +1,170 @@
+{
+  "space": {
+    "default": "20px",
+    "xxs": "2px",
+    "xs": "5px",
+    "s": "10px",
+    "m": "20px",
+    "l": "40px",
+    "xl": "80px",
+    "inset": {
+      "default": "20px",
+      "xs": "5px",
+      "s": "10px",
+      "m": "20px",
+      "l": "40px"
+    },
+    "stack": {
+      "default": "0 0 20px 0",
+      "xxs": "0 0 2px 0",
+      "xs": "0 0 5px 0",
+      "s": "0 0 10px 0",
+      "m": "0 0 20px 0",
+      "l": "0 0 40px 0"
+    },
+    "inline": {
+      "default": "0 20px 0 0",
+      "xxs": "0 2px 0 0",
+      "xs": "0 5px 0 0",
+      "s": "0 10px 0 0",
+      "m": "0 20px 0 0",
+      "l": "0 40px 0 0"
+    }
+  },
+  "size": {
+    "radius": {
+      "default": "10px",
+      "small": "5px"
+    }
+  },
+  "color": {
+    "neutral": {
+      "white": "#ffffff",
+      "gray": {
+        "a": "#fafaf9",
+        "b": "#f3f2f2",
+        "c": "#ecebea",
+        "d": "#dddbda",
+        "e": "#c9c7c5",
+        "f": "#b0adab",
+        "g": "#969492",
+        "h": "#706e6b",
+        "i": "#514f4d",
+        "j": "#3e3e3c",
+        "k": "#2b2826"
+      },
+      "black": "#000000"
+    },
+    "brand": {
+      "primary": "#642594",
+      "primaryActive": "#892FCE",
+      "light": "#C487F3",
+      "lightActive": "#B350FF",
+      "dark": "#47186B",
+      "darkActive": "#5C059E"
+    },
+    "special": {
+      "attention": "#080C7A"
+    }
+  },
+  "font": {
+    "family": {
+      "initial": "Arial, sans-serif",
+      "target": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif"
+    },
+    "weight": {
+      "standard": 400,
+      "bold": 600
+    },
+    "size": {
+      "xxs": ".8em",
+      "xs": ".95em",
+      "s": "1.1em",
+      "m": "1.35em",
+      "l": "1.7em",
+      "xl": "2em",
+      "xxl": "2.2em",
+      "xxxl": "2.8em"
+    },
+    "lineHeight": {
+      "xs": 1.1,
+      "s": 1.2,
+      "m": 1.3,
+      "l": 1.4,
+      "xl": 1.5,
+      "xxl": 1.6,
+      "reset": 1
+    }
+  },
+  "time": {
+    "duration": {
+      "default": "0.2s",
+      "long": "0.5s"
+    }
+  },
+  "background": {
+    "color": {
+      "primary": "#ffffff",
+      "alt": "#fafaf9",
+      "brand": "#642594"
+    }
+  },
+  "text": {
+    "family": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif",
+    "color": {
+      "primary": "#3e3e3c",
+      "primaryInverse": "#ffffff",
+      "brand": "#642594",
+      "attention": "#080C7A"
+    },
+    "lineHeight": {
+      "default": 1.6
+    },
+    "maxWidth": {
+      "tablet": "650px",
+      "desktop": "700px"
+    }
+  },
+  "heading": {
+    "family": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif",
+    "size": {
+      "h1": "2.2em",
+      "h2": "1.7em",
+      "h3": "1.35em"
+    },
+    "lineHeight": {
+      "h1": 1.1,
+      "h2": 1.1,
+      "h3": 1.1
+    },
+    "weight": 600
+  },
+  "line": {
+    "color": "#ecebea"
+  },
+  "icon": {
+    "color": "#642594"
+  },
+  "hero": {
+    "h1": {
+      "size": "2.8em",
+      "color": "#ffffff",
+      "lineHeight": 1.1
+    },
+    "background": "linear-gradient(0deg, #E0306E, #6438B5)"
+  },
+  "blog": {
+    "h1": {
+      "size": "1.7em",
+      "lineHeight": 1.1,
+      "hoverColor": "#642594"
+    }
+  },
+  "header": {
+    "height": {
+      "default": "80px",
+      "fixed": "50px;",
+      "homepage": "100px;"
+    }
+  }
+}

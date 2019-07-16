@@ -8,7 +8,7 @@ import { useTheme, withTheme } from "../helpers/theme"
 import styled from "@emotion/styled"
 import PostMeta from "./PostMeta"
 import NextPrev from "./NextPrev"
-import { StaticQuery, graphql } from "gatsby"
+import { StaticQuery } from "gatsby"
 import Img from "gatsby-image"
 import { AVATAR_QUERY } from "./Header"
 

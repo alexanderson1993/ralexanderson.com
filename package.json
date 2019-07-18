@@ -10,7 +10,6 @@
   "dependencies": {
     "@emotion/core": "^10.0.14",
     "@emotion/styled": "^10.0.14",
-    "@mdx-deck/gatsby-theme": "^2.5.0",
     "@mdx-js/mdx": "^1.0.27",
     "@mdx-js/react": "^1.0.27",
     "@theme-ui/prism": "^0.2.8",
@@ -30,6 +29,7 @@
     "gatsby-remark-numbered-footnotes": "^1.0.0",
     "gatsby-remark-smartypants": "^2.1.2",
     "gatsby-source-filesystem": "^2.1.5",
+    "gatsby-theme-mdx-deck": "^3.0.0",
     "gatsby-transformer-sharp": "^2.2.3",
     "lodash.merge": "^4.6.2",
     "mdx-deck": "^2.5.0",

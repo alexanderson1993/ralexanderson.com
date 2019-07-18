@@ -30,12 +30,12 @@ module.exports = {
       },
     },
     {
-      resolve: "@mdx-deck/gatsby-theme",
+      resolve: "gatsby-theme-mdx-deck",
       options: {
         // source directory for decks
-        path: "src/decks",
+        contentPath: "content/decks",
         // name routes' basepath
-        name: "decks",
+        basePath: "/decks",
       },
     },
     {

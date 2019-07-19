@@ -1,69 +1,47 @@
 import React from "react"
-import css from "@emotion/css"
-import { useTheme } from "../helpers/theme"
+import { css, Footer } from "theme-ui"
+import styled from "@emotion/styled"
 
-const Footer = () => {
-  const theme = useTheme()
+const List = styled.ul`
+  list-style: none;
+  text-align: center;
+  padding: 0;
+  width: 100%;
+
+  li:last-child::after {
+    content: "";
+  }
+`
+const FooterComp = () => {
   return (
-    <React.Fragment>
-      <footer
-        css={css`
-          background: ${theme.color.neutral.white};
-          padding-top: 0;
-
-          ul {
-            list-style: none;
-            text-align: center;
-            padding: 0;
-
-            li {
-              color: ${theme.color.neutral.gray.i};
-              font-size: ${theme.font.size.xxs};
-              padding: ${theme.space.xxs} ${theme.space.s};
-              position: relative;
-              display: inline-block;
-
-              &::after {
-                content: "•";
-                position: absolute;
-                right: ${`calc(${theme.space.xs} * -1)`};
-              }
-              &:last-child::after {
-                content: "";
-              }
-            }
-          }
-        `}
-        className="footer"
-      >
-        <ul>
-          <li>
-            built with ♡ by <em>Alex Anderson</em>
-          </li>
-          <li>
-            delivered by{" "}
-            <a
-              href="https://www.netlify.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Netlify
-            </a>
-          </li>
-          <li>
-            photos by{" "}
-            <a
-              href="https://unsplash.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              unsplash.com
-            </a>
-          </li>
-        </ul>
-      </footer>
-    </React.Fragment>
+    <Footer>
+      <List>
+        <li css={css({ variant: "footer.listItem" })}>
+          built with ♡ by <em>Alex Anderson</em>
+        </li>
+        <li css={css({ variant: "footer.listItem" })}>
+          delivered by{" "}
+          <a
+            href="https://www.netlify.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Netlify
+          </a>
+        </li>
+        <li css={css({ variant: "footer.listItem" })}>
+          photos by{" "}
+          <a
+            href="https://unsplash.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            unsplash.com
+          </a>
+        </li>
+      </List>
+    </Footer>
   )
 }
 
-export default Footer
+export default FooterComp

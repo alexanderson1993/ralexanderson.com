@@ -1,10 +1,11 @@
 import merge from "lodash.merge"
+import { base } from "@theme-ui/presets"
 import typography from "./typography"
 import colors from "./colors"
 import styles from "./styles"
 import prism from "./prism"
 
-export default merge({}, typography, {
+export default merge(base, typography, {
   initialColorMode: `light`,
   colors,
   fonts: {
@@ -16,4 +17,16 @@ export default merge({}, typography, {
   },
   styles,
   prism,
+  footer: {
+    listItem: {
+      position: "relative",
+      display: "inline-block",
+      px: 1,
+      "::after": {
+        content: '"•"',
+        position: "absolute",
+        right: "-3px",
+      },
+    },
+  },
 })

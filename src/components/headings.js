@@ -22,9 +22,6 @@ const heading = Tag => props => (
   <Tag
     {...props}
     css={{
-      a: {
-        visibility: `hidden`,
-      },
       ":hover a": {
         visibility: `visible`,
       },
@@ -36,6 +33,7 @@ const heading = Tag => props => (
         ml: `-20px`,
         pr: `4px`,
         color: `primary`,
+        visibility: "hidden",
       })}
     >
       <LinkIcon />

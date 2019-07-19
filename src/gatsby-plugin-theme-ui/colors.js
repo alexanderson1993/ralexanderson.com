@@ -5,8 +5,6 @@ const black80 = `#1B1F23`
 const white = `#fff`
 const lightWhite = `rgba(255, 255, 255, 0.86)`
 const opaqueLightYellow = `rgba(255, 229, 100, 0.2)`
-const opaqueLightWhite = `hsla(0, 0%, 100%, 0.2)`
-const lightGray = `hsla(0, 0%, 0%, 0.2)`
 const middleGray = `rgba(128,128,128,0.5)`
 
 export default {

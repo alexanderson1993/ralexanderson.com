@@ -1,23 +1,22 @@
 import PropTypes from "prop-types"
 import React from "react"
-import styled from "@emotion/styled"
-import { withTheme } from "../helpers/theme"
 
 import Item from "./PostItem"
 import Layout from "./Layout"
-const PostList = withTheme(styled.ul`
-  list-style: none;
-  margin: 0 auto;
-  padding: ${theme =>
-    `calc(${theme.space.default} * 1.5) 0 calc(${theme.space.default} * 0.5)`};
-  max-width: ${theme => theme.text.maxWidth.desktop};
-`)
+import { Styled, css } from "theme-ui"
 
 const Blog = props => {
   const { posts } = props
   return (
     <Layout {...props} content>
-      <PostList>
+      <Styled.ul
+        css={css({
+          listStyle: "none",
+          margin: "0 auto",
+          padding: 2,
+          maxWidth: "700px",
+        })}
+      >
         {posts.map(post => {
           const {
             node,
@@ -25,7 +24,7 @@ const Blog = props => {
           } = post
           return <Item key={slug} post={node} />
         })}
-      </PostList>
+      </Styled.ul>
     </Layout>
   )
 }

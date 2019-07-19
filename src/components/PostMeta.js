@@ -4,9 +4,23 @@ import { FaCalendar } from "react-icons/fa/"
 import { FaTag } from "react-icons/fa/"
 import { FaUser } from "react-icons/fa/"
 import styled from "@emotion/styled"
-import { withTheme } from "../helpers/theme"
+import { css } from "theme-ui"
 
-const Meta = withTheme(styled.p`
+const IconHolder = ({ children }) => {
+  return (
+    <span
+      css={css({
+        display: "flex",
+        alignItems: "center",
+        textTransform: "uppercase",
+        margin: 2,
+      })}
+    >
+      {children}
+    </span>
+  )
+}
+const Meta = styled.p`
   line-height: 1.5;
   text-remove-gap: both;
   display: flex;
@@ -14,37 +28,25 @@ const Meta = withTheme(styled.p`
   font-size: 0.8em;
 
   background: transparent;
-
-  svg {
-    fill: ${theme => theme.icon.color};
-    margin: ${theme => theme.space.inline.xs};
-  }
-  span {
-    align-items: center;
-    display: flex;
-    text-transform: uppercase;
-    margin: ${theme => theme.space.xs} ${theme => theme.space.s}
-      ${theme => theme.space.xs} 0;
-  }
-`)
+`
 
 const PostMeta = ({ className, date, author, category }) => {
   return (
     <Meta className={className}>
       {date && (
-        <span>
+        <IconHolder>
           <FaCalendar size={18} /> {date}
-        </span>
+        </IconHolder>
       )}
       {author && (
-        <span>
+        <IconHolder>
           <FaUser size={18} /> {author}
-        </span>
+        </IconHolder>
       )}
       {category && (
-        <span>
+        <IconHolder>
           <FaTag size={18} /> {category}
-        </span>
+        </IconHolder>
       )}
     </Meta>
   )

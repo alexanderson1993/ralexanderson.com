@@ -7,7 +7,6 @@ import { StaticQuery, graphql } from "gatsby"
 import Img from "gatsby-image"
 import { Header, css as themeCss, Styled } from "theme-ui"
 import styled from "@emotion/styled"
-import css from "@emotion/css"
 
 export const AVATAR_QUERY = graphql`
   query Avatar {
@@ -83,16 +82,6 @@ const ItemList = styled.ul`
   justify-content: flex-end;
   padding: 0;
 `
-
-/* a {
-          color: ${theme.color.neutral.white};
-          padding: ${theme.space.inset.s};
-          transition: all ${theme.time.duration.default};
-          border-radius: ${theme.size.radius.small};
-          &:hover {
-            color: ${theme.color.brand.light};
-          }
-        } */
 
 const Item = ({ to, children }) => {
   return (

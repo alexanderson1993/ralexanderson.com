@@ -3,52 +3,54 @@ import { Link } from "gatsby"
 
 import { FaArrowRight } from "react-icons/fa/"
 import { FaArrowLeft } from "react-icons/fa/"
-import styled from "@emotion/styled"
-import { withTheme } from "../helpers/theme"
+import { Styled, css as themeCss } from "theme-ui"
 
-const Links = withTheme(styled.div`
-  display: flex;
-  padding: 0 ${theme => theme.space.m} ${theme => theme.space.l};
-  border-bottom: 1px solid ${theme => theme.line.color};
-  margin: ${theme => theme.space.stack.l};
-  flex-direction: row-reverse;
-  justify-content: center;
-  h4 {
-    font-weight: 600;
-    margin: 0;
-    font-size: 1.1em;
-  }
-  a {
-    display: flex;
+// const Links = withTheme(styled.div`
 
-    flex-basis: 50%;
-  }
-  a:nth-child(2) {
-    margin: 0;
-  }
-  a:hover svg {
-    transform: scale(1.5);
-  }
+//   h4 {
+//     font-weight: 600;
+//     margin: 0;
+//     font-size: 1.1em;
+//   }
+//   a {
+//     display: flex;
 
-  svg {
-    fill: ${theme => theme.color.special.attention};
-    width: ${theme => theme.space.m};
-    height: ${theme => theme.space.m};
-    flex-shrink: 0;
-    flex-grow: 0;
-    margin: ${theme => theme.space.inline.m};
-    transition: all 0.5s;
-    margin: ${theme => theme.space.inline.s};
-  }
-`)
+//     flex-basis: 50%;
+//   }
+//   a:nth-child(2) {
+//     margin: 0;
+//   }
+//   a:hover svg {
+//     transform: scale(1.5);
+//   }
 
-const Time = withTheme(styled.time`
-  color: ${theme => theme.color.neutral.gray.g};
-  display: block;
-  font-weight: 400;
-  font-size: 0.8em;
-  margin-top: 0.5em;
-`)
+//   svg {
+//     fill: ${theme => theme.color.special.attention};
+//     width: ${theme => theme.space.m};
+//     height: ${theme => theme.space.m};
+//     flex-shrink: 0;
+//     flex-grow: 0;
+//     margin: ${theme => theme.space.inline.m};
+//     transition: all 0.5s;
+//     margin: ${theme => theme.space.inline.s};
+//   }
+// `)
+
+const Time = ({ children }) => {
+  return (
+    <time
+      css={themeCss({
+        display: "block",
+        fontWeight: "400",
+        fontSize: "0.8em",
+        marginTop: "0.5em",
+        color: "muted",
+      })}
+    >
+      {children}
+    </time>
+  )
+}
 
 const NextPrev = props => {
   const { next = {}, prev = {} } = props
@@ -58,72 +60,36 @@ const NextPrev = props => {
   const { title: prevTitle, slug: prevSlug, date: prevDate } = prev
     ? prev.node
     : {}
-  console.log(nextTitle, nextSlug, nextDate)
   return (
-    <Links>
+    <Styled.div
+      css={themeCss({
+        display: "flex",
+        px: 2,
+        borderBottom: "1px solid",
+        borderBottomColor: "muted",
+        m: 3,
+        flexDirection: "row-reverse",
+        justifyContent: "center",
+      })}
+    >
       {nextSlug && (
         <Link to={nextSlug}>
           <FaArrowRight />
-          <h4>
+          <Styled.h4>
             {nextTitle} <Time>{nextDate}</Time>
-          </h4>
+          </Styled.h4>
         </Link>
       )}
       {prevSlug && (
         <Link to={prevSlug}>
           <FaArrowLeft />
-          <h4>
+          <Styled.h4>
             {prevTitle} <Time>{prevDate}</Time>
-          </h4>
+          </Styled.h4>
         </Link>
       )}
-    </Links>
+    </Styled.div>
   )
-  // return (
-  //   <React.Fragment>
-  //
-
-  //     {/* --- STYLES --- */}
-  //     <style jsx>{`
-  //       .links {
-
-  //         :global(a) {
-  //         }
-
-  //         :global(a:nth-child(2)) {
-  //           margin: ${theme.space.default} 0 0;
-  //         }
-
-  //         :global(svg) {
-
-  //         }
-  //       }
-
-  //       h4 {
-
-  //       }
-  //       time {
-
-  //       }
-
-  //       @from-width desktop {
-  //         .links {
-
-  //           :global(a) {
-  //           }
-
-  //           :global(svg) {
-
-  //           }
-  //         }
-
-  //         @media (hover: hover) {
-  //
-  //         }
-  //       }
-  //     `}</style>
-  //   </React.Fragment>
-  // );
 }
 
 export default NextPrev

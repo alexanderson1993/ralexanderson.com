@@ -32,7 +32,6 @@ const FollowButtons = styled.div`
 `
 const Hero = () => {
   const { theme } = useThemeUI()
-  console.log(theme)
   React.useEffect(() => {
     if (typeof window === "undefined") return () => {}
     if (!window.twttr) {

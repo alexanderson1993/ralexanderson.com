@@ -3,7 +3,6 @@ import PrismCodeBlock from "@theme-ui/prism"
 
 import headings from "../components/headings"
 import css from "@emotion/css"
-import Img from "gatsby-image"
 
 export default {
   pre: ({ children }) => <>{children}</>,

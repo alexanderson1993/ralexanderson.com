@@ -85,13 +85,7 @@ module.exports = {
             },
             query: `
             {
-              allMdx(
-                limit: 1000,
-                sort: {
-                  order: DESC,
-                  fields: [frontmatter___date]
-                }
-              ) {
+              allMdx(limit: 1000, sort: {order: DESC, fields: [frontmatter___date]}, filter: {fileAbsolutePath: {glob: "**/posts/**"}}) {
                 edges {
                   node {
                     frontmatter {
@@ -105,6 +99,7 @@ module.exports = {
                 }
               }
             }
+            
           `,
             output: `rss.xml`,
           },

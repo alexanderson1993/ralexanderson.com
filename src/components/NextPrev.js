@@ -4,38 +4,6 @@ import { Link } from "gatsby"
 import { FaArrowRight } from "react-icons/fa/"
 import { FaArrowLeft } from "react-icons/fa/"
 import { Styled, css as themeCss } from "theme-ui"
-import css from "@emotion/css"
-
-// const Links = withTheme(styled.div`
-
-//   h4 {
-//     font-weight: 600;
-//     margin: 0;
-//     font-size: 1.1em;
-//   }
-//   a {
-//     display: flex;
-
-//     flex-basis: 50%;
-//   }
-//   a:nth-child(2) {
-//     margin: 0;
-//   }
-//   a:hover svg {
-//     transform: scale(1.5);
-//   }
-
-//   svg {
-//     fill: ${theme => theme.color.special.attention};
-//     width: ${theme => theme.space.m};
-//     height: ${theme => theme.space.m};
-//     flex-shrink: 0;
-//     flex-grow: 0;
-//     margin: ${theme => theme.space.inline.m};
-//     transition: all 0.5s;
-//     margin: ${theme => theme.space.inline.s};
-//   }
-// `)
 
 const Time = ({ children }) => {
   return (

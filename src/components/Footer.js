@@ -20,6 +20,16 @@ const FooterComp = () => {
           built with ♡ by <em>Alex Anderson</em>
         </li>
         <li css={css({ variant: "footer.listItem" })}>
+          created with{" "}
+          <a
+            href="https://www.gatsbyjs.org/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Gatsby
+          </a>
+        </li>
+        <li css={css({ variant: "footer.listItem" })}>
           delivered by{" "}
           <a
             href="https://www.netlify.com/"

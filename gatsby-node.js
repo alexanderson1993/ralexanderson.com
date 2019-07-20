@@ -42,6 +42,7 @@ const mdxResolverPassthrough = fieldName => async (
   const mdxNode = context.nodeModel.getNodeById({
     id: source.parent,
   })
+  if (fieldName === "fileAbsolutePath") return mdxNode.fileAbsolutePath
   const resolver = type.getFields()[fieldName].resolve
   const result = await resolver(mdxNode, args, context, {
     fieldName,
@@ -64,6 +65,10 @@ exports.sourceNodes = ({ actions, schema }) => {
         date: { type: `Date`, extensions: { dateformat: {} } },
         category: { type: `String` },
         author: { type: `String` },
+        fileAbsolutePath: {
+          type: `String`,
+          resolve: mdxResolverPassthrough(`fileAbsolutePath`),
+        },
         keywords: { type: `[String]!` },
         cover: { type: `File` },
         excerpt: {
@@ -116,6 +121,8 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
             title
             author
             category
+            body
+            fileAbsolutePath
             cover {
               children {
                 ... on ImageSharp {
@@ -151,22 +158,59 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   const { title: siteTitle, social: socialLinks } = siteMetadata
 
   // Create a page for each Post
-  posts.forEach(({ node: post }, index) => {
-    const previous = index === posts.length - 1 ? null : posts[index + 1]
-    const next = index === 0 ? null : posts[index - 1]
-    const { slug } = post
-    createPage({
-      path: slug,
-      component: PostTemplate,
-      context: {
-        ...post,
-        siteTitle,
-        socialLinks,
-        previous,
-        next,
-      },
+  await Promise.all(
+    posts.map(async ({ node: post }, index) => {
+      const previous = index === posts.length - 1 ? null : posts[index + 1]
+      const next = index === 0 ? null : posts[index - 1]
+      const { slug, body, fileAbsolutePath } = post
+
+      // Pull out the relative file paths
+      const path = fileAbsolutePath
+        .split("/")
+        .slice(0, -1)
+        .join("/")
+      const matches = body.match(/.*"src": "(.*)"/g) || []
+      const imagePaths = matches.map(t => t.replace(/.*"src": "(.*)"/g, "$1"))
+      const absolutePaths = imagePaths.map(p => `${path}/${p}`)
+      const fullImagePaths = await Promise.all(
+        absolutePaths.map(async p => {
+          const result = await graphql(
+            `
+              query Images($absolutePath: String) {
+                allFile(filter: { absolutePath: { eq: $absolutePath } }) {
+                  nodes {
+                    childImageSharp {
+                      fluid(maxWidth: 700) {
+                        src
+                      }
+                    }
+                  }
+                }
+              }
+            `,
+            { absolutePath: p }
+          )
+          if (result) {
+            return result.data.allFile.nodes[0].childImageSharp.fluid.src
+          }
+          return null
+        })
+      )
+
+      return createPage({
+        path: slug,
+        component: PostTemplate,
+        context: {
+          ...post,
+          siteTitle,
+          imagePaths: fullImagePaths,
+          socialLinks,
+          previous,
+          next,
+        },
+      })
     })
-  })
+  )
 
   // // Create the Posts page
   createPage({

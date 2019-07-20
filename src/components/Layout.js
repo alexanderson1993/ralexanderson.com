@@ -1,5 +1,4 @@
 import "typeface-open-sans"
-import PropTypes from "prop-types"
 import React from "react"
 import Footer from "./Footer"
 import Header from "./Header"
@@ -35,11 +34,6 @@ const Layout = ({ location = {}, children }) => {
       />
     </>
   )
-}
-
-Layout.propTypes = {
-  children: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
 }
 
 export default Layout

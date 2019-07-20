@@ -11,6 +11,27 @@ import { AVATAR_QUERY } from "./Header"
 import { useThemeUI, Styled, css as themeCss } from "theme-ui"
 import css from "@emotion/css"
 
+function slice(string, start, delCount, newSubStr) {
+  return (
+    string.slice(0, start) +
+    newSubStr +
+    string.slice(start + Math.abs(delCount))
+  )
+}
+function processImagePaths(body, imagePaths) {
+  const regExp = /"src": "(.*)"/g
+  const matches = []
+  let output = []
+  while ((output = regExp.exec(body)) !== null) {
+    matches.push({ len: output[0].length, index: output.index })
+  }
+  for (let i = matches.length - 1; i >= 0; i--) {
+    const image = imagePaths[i]
+    body = slice(body, matches[i].index, matches[i].len, `"src": "${image}"`)
+  }
+
+  return body
+}
 const Post = ({
   data: {
     post,
@@ -21,15 +42,17 @@ const Post = ({
   location,
   previous,
   next,
+  imagePaths,
 }) => {
-  const { theme, ...rest } = useThemeUI()
-  console.log(rest)
+  const { theme } = useThemeUI()
+  const body = processImagePaths(post.body, imagePaths)
   return (
     <Layout content>
       <Seo title={post.title} description={post.excerpt} />
       <article
         css={css`
           margin: 0 auto;
+          margin-top: 10rem;
           max-width: 700px;
           h1,
           h2,
@@ -49,13 +72,14 @@ const Post = ({
       >
         <h1
           css={themeCss({
+            fontSize: 5,
             my: 3,
           })}
         >
           {post.title}
         </h1>
         <PostMeta {...post} />
-        <MDXRenderer>{post.body}</MDXRenderer>
+        <MDXRenderer>{body}</MDXRenderer>
         <footer>
           <Styled.div
             css={themeCss({

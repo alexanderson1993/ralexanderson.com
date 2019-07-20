@@ -10,16 +10,41 @@ const toPostPath = post => {
 module.exports = {
   plugins: [
     {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `content/posts`,
+        name: `content/posts`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `content/assets`,
+        name: `content/assets`,
+      },
+    },
+    {
       resolve: `gatsby-plugin-mdx`,
       options: {
         extensions: [`.mdx`, `.md`],
         gatsbyRemarkPlugins: [
           {
+            resolve: `gatsby-remark-relative-images-v2`,
+          },
+          `gatsby-plugin-sharp`,
+
+          {
             resolve: `gatsby-remark-images`,
             options: {
               // should this be configurable by the end-user?
               maxWidth: 1380,
-              linkImagesToOriginal: false,
+              linkImagesToOriginal: true,
+            },
+          },
+          {
+            resolve: `gatsby-remark-responsive-iframe`,
+            options: {
+              wrapperStyle: `margin-bottom: 2em`,
             },
           },
           { resolve: `gatsby-remark-copy-linked-files` },
@@ -36,20 +61,6 @@ module.exports = {
         contentPath: "content/decks",
         // name routes' basepath
         basePath: "/decks",
-      },
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        path: `content/posts`,
-        name: `content/posts`,
-      },
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        path: `content/assets`,
-        name: `content/assets`,
       },
     },
     {
@@ -100,6 +111,13 @@ module.exports = {
         ],
       },
     },
+    {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        trackingId: process.env.GOOGLE_ANALYTICS_ID,
+      },
+    },
+    `gatsby-plugin-sitemap`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     `gatsby-plugin-react-helmet`,

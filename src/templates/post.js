@@ -3,8 +3,18 @@ import { graphql } from "gatsby"
 
 import Post from "../components/Post"
 
-export default ({ pageContext: { previous, next }, location, data }) => (
-  <Post data={data} location={location} previous={previous} next={next} />
+export default ({
+  pageContext: { previous, next, imagePaths },
+  location,
+  data,
+}) => (
+  <Post
+    data={data}
+    location={location}
+    previous={previous}
+    next={next}
+    imagePaths={imagePaths}
+  />
 )
 
 export const pageQuery = graphql`

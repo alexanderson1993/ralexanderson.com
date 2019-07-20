@@ -13,7 +13,12 @@ const IconHolder = ({ children }) => {
         display: "flex",
         alignItems: "center",
         textTransform: "uppercase",
-        margin: 2,
+        marginY: 2,
+        marginRight: 2,
+        svg: {
+          marginRight: 1,
+          color: "primary",
+        },
       })}
     >
       {children}

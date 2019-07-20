@@ -181,7 +181,13 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
                   nodes {
                     childImageSharp {
                       fluid(maxWidth: 700) {
+                        base64
+                        aspectRatio
                         src
+                        srcSet
+                        srcWebp
+                        srcSetWebp
+                        sizes
                       }
                     }
                   }
@@ -191,7 +197,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
             { absolutePath: p }
           )
           if (result) {
-            return result.data.allFile.nodes[0].childImageSharp.fluid.src
+            return result.data.allFile.nodes[0].childImageSharp.fluid
           }
           return null
         })

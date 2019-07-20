@@ -10,6 +10,7 @@ import Img from "gatsby-image"
 import { AVATAR_QUERY } from "./Header"
 import { useThemeUI, Styled, css as themeCss } from "theme-ui"
 import css from "@emotion/css"
+const { mdx } = require("@mdx-js/react")
 
 function slice(string, start, delCount, newSubStr) {
   return (
@@ -19,7 +20,7 @@ function slice(string, start, delCount, newSubStr) {
   )
 }
 function processImagePaths(body, imagePaths) {
-  const regExp = /"src": "(.*)"/g
+  const regExp = /"src": "(.*)",/g
   const matches = []
   let output = []
   while ((output = regExp.exec(body)) !== null) {
@@ -27,9 +28,15 @@ function processImagePaths(body, imagePaths) {
   }
   for (let i = matches.length - 1; i >= 0; i--) {
     const image = imagePaths[i]
-    body = slice(body, matches[i].index, matches[i].len, `"src": "${image}"`)
+    body = slice(
+      body,
+      matches[i].index,
+      matches[i].len,
+      Object.entries(image)
+        .map(([key, value]) => `"${key}": \`${value}\`,`)
+        .join("\n")
+    )
   }
-
   return body
 }
 const Post = ({
@@ -79,7 +86,19 @@ const Post = ({
           {post.title}
         </h1>
         <PostMeta {...post} />
-        <MDXRenderer>{body}</MDXRenderer>
+        <MDXRenderer
+          scope={{
+            mdx: (...args) => {
+              if (args[0] === "img") {
+                const { alt, ...fluid } = args[1]
+                return mdx(Img, { alt, fluid })
+              }
+              return mdx(...args)
+            },
+          }}
+        >
+          {body}
+        </MDXRenderer>
         <footer>
           <Styled.div
             css={themeCss({
@@ -89,17 +108,19 @@ const Post = ({
               borderBottom: " 1px solid",
               borderTopColor: "muted",
               borderBottomColor: "muted",
+              display: "flex",
             })}
           >
             <div
               css={css`
-                border-radius: 65% 75%;
+                border-radius: 50%;
                 border: 1px solid ${theme.colors.muted};
                 display: inline-block;
                 height: 50px;
                 margin: 5px 20px 0 0;
                 overflow: hidden;
                 width: 50px;
+                flex-shrink: 0;
                 img {
                   width: 100%;
                 }

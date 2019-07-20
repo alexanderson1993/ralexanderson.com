@@ -4,6 +4,7 @@ import { Link } from "gatsby"
 import { FaArrowRight } from "react-icons/fa/"
 import { FaArrowLeft } from "react-icons/fa/"
 import { Styled, css as themeCss } from "theme-ui"
+import css from "@emotion/css"
 
 // const Links = withTheme(styled.div`
 
@@ -70,20 +71,27 @@ const NextPrev = props => {
         m: 3,
         flexDirection: "row-reverse",
         justifyContent: "center",
+        a: {
+          display: "flex",
+          mx: 3,
+          "&:first-child": {
+            textAlign: "right",
+          },
+        },
       })}
     >
       {nextSlug && (
         <Link to={nextSlug}>
-          <FaArrowRight />
-          <Styled.h4>
+          <Styled.h4 css={themeCss({ px: 2 })}>
             {nextTitle} <Time>{nextDate}</Time>
           </Styled.h4>
+          <FaArrowRight />
         </Link>
       )}
       {prevSlug && (
         <Link to={prevSlug}>
           <FaArrowLeft />
-          <Styled.h4>
+          <Styled.h4 css={themeCss({ px: 2 })}>
             {prevTitle} <Time>{prevDate}</Time>
           </Styled.h4>
         </Link>

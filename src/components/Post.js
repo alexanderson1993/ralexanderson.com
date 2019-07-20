@@ -59,8 +59,8 @@ const Post = ({
       <article
         css={css`
           margin: 0 auto;
-          margin-top: 10rem;
-          max-width: 700px;
+          max-width: 800px;
+          padding: 0 20px;
           h1,
           h2,
           h3 {

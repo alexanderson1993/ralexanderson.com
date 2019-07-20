@@ -24,7 +24,6 @@ const HeaderComponent = styled(Header)`
   align-items: center;
   justify-content: center;
   display: flex;
-  position: absolute;
   top: 0;
   width: 100%;
   justify-content: space-between;

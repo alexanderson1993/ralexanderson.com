@@ -9,9 +9,21 @@ import { useColorMode, css } from "theme-ui"
 const Layout = ({ location = {}, children }) => {
   const [colorMode, setColorMode] = useColorMode()
   return (
-    <>
+    <div
+      css={css({
+        display: "flex",
+        flexDirection: "column",
+        minHeight: "100vh",
+      })}
+    >
       <Header path={location.pathname} />
-      <main>{children}</main>
+      <main
+        css={css({
+          flex: 1,
+        })}
+      >
+        {children}
+      </main>
       <Footer />
       <GlobalStyles />
       <FaLightbulb
@@ -32,7 +44,7 @@ const Layout = ({ location = {}, children }) => {
         })}
         onClick={() => setColorMode(colorMode === "light" ? "dark" : "light")}
       />
-    </>
+    </div>
   )
 }
 

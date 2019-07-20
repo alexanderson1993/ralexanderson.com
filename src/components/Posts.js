@@ -14,7 +14,7 @@ const Blog = props => {
           listStyle: "none",
           margin: "0 auto",
           padding: 2,
-          maxWidth: "700px",
+          maxWidth: "800px",
         })}
       >
         {posts.map(post => {

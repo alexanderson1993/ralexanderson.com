@@ -7,42 +7,6 @@ import PostMeta from "./PostMeta"
 import css from "@emotion/css"
 import { css as themeCss, Styled, useThemeUI } from "theme-ui"
 
-// const PostItem = styled.li`
-//   border: 1px solid transparent;
-//   border-radius: ${theme => theme.size.radius.default};
-//   position: relative;
-//   background: transparent;
-
-//   margin: ${theme =>
-//     `calc(${theme.space.default} * 4) 0 calc(${theme.space.default} * 5)`};
-//   padding: 0 0 ${theme => `calc(${theme.space.default} * 2)`};
-
-//   .gatsby-image-outer-wrapper {
-//     border-radius: ${theme => theme.size.radius.default};
-//     border: 1px solid ${theme => theme.line.color};
-//     overflow: hidden;
-//   }
-//   .gatsby-image-outer-wrapper img {
-//     z-index: -1;
-//   }
-//   a {
-//     color: ${theme => theme.text.color.primary};
-//   }
-
-//   .gatsby-image-wrapper {
-//     transition: all ${theme => theme.time.duration.default};
-//   }
-
-//   h1 {
-//     padding: ${theme => theme.space.m} ${theme => theme.space.s} 0;
-//     line-height: ${theme => theme.blog.h1.lineHeight};
-//     text-remove-gap: both;
-//     font-size: 2.5em;
-//     padding: ${theme =>
-//       `calc(${theme.space.default} * 1.2) calc(${theme.space.default} * 2) 0`};
-//   }
-// `
-
 const Item = props => {
   const {
     post: { date, title, excerpt, slug, author, cover, category },
@@ -56,7 +20,7 @@ const Item = props => {
     <Styled.li
       css={css`
         transition: all 0.5s;
-        margin: ${theme.space[5]}px 0;
+        margin-bottom: ${theme.space[5]}px;
         .gatsby-image-wrapper {
           transition: all 0.5s;
         }

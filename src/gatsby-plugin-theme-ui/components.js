@@ -1,7 +1,6 @@
 import React from "react"
 import PrismCodeBlock from "@theme-ui/prism"
 
-import headings from "../components/headings"
 import css from "@emotion/css"
 
 export default {
@@ -16,5 +15,4 @@ export default {
       `}
     />
   ),
-  ...headings,
 }

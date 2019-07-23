@@ -101,8 +101,8 @@ const Item = ({ to, children }) => {
 }
 const HeaderComp = () => {
   const pages = [
-    { to: "/decks/", label: "Presentations" },
     { to: "/blog/", label: "Blog" },
+    { to: "/decks/", label: "Presentations" },
     // { to: "/category/", label: "Categories" },
     // { to: "/search/", label: "Search" },
     // { to: "/about", label: "About" },

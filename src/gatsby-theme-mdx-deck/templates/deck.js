@@ -41,6 +41,15 @@ const wrapper = props => {
         img {
           max-height: 80vh;
         }
+        video {
+          max-height: 90vh;
+        }
+        blockquote {
+          max-width: 50vw;
+        }
+        cite {
+          font-size: 1.2rem;
+        }
       `}
     >
       <Deck {...props} slides={slides} />

@@ -1,3 +1,5 @@
+import { Appear, Notes } from "gatsby-theme-mdx-deck"
+
 # React Hooks
 
 or
@@ -18,11 +20,79 @@ or
 
 ---
 
+> Hooks let you use state and other React features without writing a class.
+
+> <cite>reactjs.org</cite>
+
+---
+
+# What Else?
+
+# 🤔
+
+---
+
+# Don't Panic
+
+<ul>
+  <Appear>
+    {[
+      <li key="opt-in">Completely opt-in</li>,
+      <li key="back">100% backwards-compatible</li>,
+      <li key="classes">Classes still work</li>,
+      <li key="18">Available in React 16.8.0+</li>,
+    ]}
+  </Appear>
+</ul>
+
+---
+
+<iframe src="https://giphy.com/embed/1M9fmo1WAFVK0" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/why-ryan-reynolds-1M9fmo1WAFVK0">via GIPHY</a></p>
+
+---
+
 > “Hooks apply the React philosophy
 > (explicit data flow and composition)inside 
 > a component, rather than just between the components.”
 
 > <cite>Dan Abramov</cite>
+
+---
+
+# Why Use Hooks
+
+<ul>
+  <Appear>
+    {[
+      <li key="reuse-logic">Reuse Stateful Logic</li>,
+      <li key="back">Create Simple Abstractions</li>,
+      <li key="decalre">Declarative effects</li>,
+      <li>Classes aren't needed</li>,
+    ]}
+  </Appear>
+</ul>
+
+---
+
+<blockquote class="twitter-tweet">
+  <p lang="en" dir="ltr">
+    Reminiscing tonight about ideas from 2014 for function components with
+    state. Sometimes we’re slow to add stuff, but that’s because we want to get
+    it right.{" "}
+    <a href="https://twitter.com/sebmarkbage?ref_src=twsrc%5Etfw">
+      @sebmarkbage
+    </a>{" "}
+    didn’t invent Hooks – the first non-class API we really liked – until 4
+    years later! <a href="https://t.co/dO7LSDESJA">https://t.co/dO7LSDESJA</a>
+  </p>
+  &mdash; Sophie Alpert (@sophiebits) <a href="https://twitter.com/sophiebits/status/1076386241371754498?ref_src=twsrc%5Etfw">December 22, 2018</a>
+</blockquote>
+
+<Notes>
+  This idea isn't new. It's been around for as long as React - how can we
+  compose our stateful logic the same way we compose our UI components? Hooks
+  allows you to do that.
+</Notes>
 
 ---
 
@@ -41,5 +111,28 @@ or
 <video autoPlay src="/react-hooks-2.mp4" />
 
 <div style="position: absolute; right: 0; top:50%;">(attribution: @prchdk)</div>
+
+---
+
+# Why Use Classes
+
+<ul>
+  <Appear>
+    {[
+      <li key="error boundary">Error Boundary</li>,
+      <li key="alternative">
+        <ul>
+          <li>Or use `react-error-boundary`</li>
+        </ul>
+      </li>,
+      <li key="wut">getSnapshotBeforeUpdate</li>,
+      <li key="wat">
+        <ul>
+          <li>Who's ever used that?</li>
+        </ul>
+      </li>,
+    ]}
+  </Appear>
+</ul>
 
 ---

@@ -59,21 +59,6 @@ or
 
 ---
 
-# Why Use Hooks
-
-<ul>
-  <Appear>
-    {[
-      <li key="reuse-logic">Reuse Stateful Logic</li>,
-      <li key="back">Create Simple Abstractions</li>,
-      <li key="decalre">Declarative effects</li>,
-      <li>Classes aren't needed</li>,
-    ]}
-  </Appear>
-</ul>
-
----
-
 <blockquote class="twitter-tweet">
   <p lang="en" dir="ltr">
     Reminiscing tonight about ideas from 2014 for function components with
@@ -96,9 +81,41 @@ or
 
 ---
 
+# Why Use Hooks
+
+<ul>
+  <Appear>
+    {[
+      <li key="reuse-logic">Reuse Stateful Logic</li>,
+      <li key="alternative">
+        <ul>
+          <li>Alternative to HOCs and Render Props</li>
+        </ul>
+      </li>,
+      <li key="back">Create Simple Abstractions</li>,
+      <li key="decalre">Declarative effects</li>,
+      <li key="bugs">Surfaces unexpected bugs</li>,
+      <li key="context">Multiple contexts in a single component</li>,
+      <li key="static-typing">Easier to static type</li>,
+      <li>Separation of concerns</li>,
+    ]}
+  </Appear>
+</ul>
+
+---
+
 <video src="/react-hooks-1.mp4" />
 
 <div style="position: absolute; right: 0; top:50%;">(attribution: @prchdk)</div>
+
+<Notes>
+  Here's a component with a couple of pieces. It's kind of hard to see what all
+  is going on here. It looks like they use a ThemeContext consumer render prop
+  down here, an event listener for the window resizing, and a bit of state for
+  storing the name. There's a lot of stuff going on here. I'm going to highlight
+  the sections of the component that deal with those particular parts of
+  functionality.
+</Notes>
 
 ---
 
@@ -106,11 +123,49 @@ or
 
 <div style="position: absolute; right: 0; top:50%;">(attribution: @prchdk)</div>
 
+<Notes>
+  Wow. You've got things mixed together all over the place. Some components
+  won't look so bad, but I'm sure many complex components will look a lot worse.
+  What if we were to take those disperate functions and separate them into their
+  own hooks.
+</Notes>
+
 ---
 
 <video autoPlay src="/react-hooks-2.mp4" />
 
 <div style="position: absolute; right: 0; top:50%;">(attribution: @prchdk)</div>
+
+<Notes>
+  When it comes to separation of concerns, this is where Hooks really shine.
+  Instead of spreading your component state and logic between a bunch of
+  disperate lifecycle methods and constructors, you can put the entire logic for
+  a particular function inside a hook. Then, just include that hook. This also
+  allows you to reuse the hook in other components that might need it or compose
+  it with other hooks.
+</Notes>
+
+---
+
+# What are the Hooks?
+
+- `useState`
+- `useEffect`
+- `useContext`
+- `useRef`
+- `useReducer`
+- `useMemo`
+- `useCallback`
+
+---
+
+<iframe
+  src="https://codesandbox.io/embed/agitated-worker-wc3c5?fontsize=14"
+  title="Hooks Demos"
+  allow="geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media"
+  style="width:100%; height:90vh; border:0; border-radius: 4px; overflow:hidden;"
+  sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
+/>
 
 ---
 
@@ -136,3 +191,21 @@ or
 </ul>
 
 ---
+
+# Learn more!
+
+<https://reactjs.org/docs/hooks-intro.html/>
+
+<https://usehooks.com/>
+
+---
+
+## Thanks 🙌
+
+<https://ralexanderson.com>
+
+<https://twitter.com/ralex1993>
+
+<https://github.com/alexanderson1993>
+
+<https://ralexanderson.com/decks/react-hooks/>

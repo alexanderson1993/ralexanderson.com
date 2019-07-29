@@ -39,7 +39,7 @@ const wrapper = props => {
           font-size: 2rem;
         }
         img {
-          max-height: 80vh;
+          max-height: 90vh;
         }
         video {
           max-height: 90vh;

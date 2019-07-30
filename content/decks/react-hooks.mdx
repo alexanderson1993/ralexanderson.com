@@ -26,15 +26,33 @@ or
 
 ---
 
-> In reality, Hooks are much more than that. They’re about improved code reuse, composition, and better defaults.
+# Hooks are just functions
 
-> <cite>Tyler Mcginnis</cite>
+```javascript
+function useGeoLocation(options) {
+  const [data, setData] = React.useState({})
+  React.useEffect(() => {
+    navigator.geolocation.getCurrentPosition(setData, () => {}, options)
+    watchId = navigator.geolocation.watchPosition(
+      onEvent,
+      onEventError,
+      options
+    )
+
+    return () => {
+      mounted = false
+      navigator.geolocation.clearWatch(watchId)
+    }
+  }, [])
+  return data
+}
+```
 
 ---
 
-# What Else?
+> In reality, Hooks are much more than that. They’re about improved code reuse, composition, and better defaults.
 
-# 🤔
+> <cite>Tyler Mcginnis</cite>
 
 ---
 
@@ -54,14 +72,6 @@ or
 ---
 
 ![But Why](/but-why.gif)
-
----
-
-> “Hooks apply the React philosophy
-> (explicit data flow and composition) inside 
-> a component, rather than just between the components.”
-
-> <cite>Dan Abramov</cite>
 
 ---
 
@@ -152,40 +162,6 @@ or
   style="width:100%; height:90vh; border:0; border-radius: 4px; overflow:hidden;"
   sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
 />
-
----
-
-<Split>
-
-![class-example](/class-example.png)
-
-<Appear>
-
-# 🐛
-
-</Appear>
-
-</Split>
-
-<Notes>
-  Do you see the bug? An eagle-eyed code reviewer may have noticed a potential
-  bug in the initial class based version - we're not cleaning up the
-  subscription when the component unmounts.
-</Notes>
-
----
-
-![hook-example](/hook-example.png)
-
----
-
-<Split>
-
-![hook-example](/hook-useHook.png)
-
-![hook-example](/hook-useHook-example.png)
-
-</Split>
 
 ---
 

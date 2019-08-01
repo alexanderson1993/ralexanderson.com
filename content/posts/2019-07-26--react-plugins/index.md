@@ -166,20 +166,45 @@ We can now use the Parcel API to generate packages dynamically:
 const bundles = await Promise.all(
   pluginFiles.map(async ({ name, entryPoint, dirPath }) => {
     const options = {
-      outDir: `./.builtPlugins/${name}`, // The out directory to put the build files in, defaults to dist
-      publicUrl: `http://${ipAddress}:${port}/${dirPath}`, // The url to serve on, defaults to '/'
+      // The out directory to put the build files in
+      outDir: `./.builtPlugins/${name}`,
+
+      // The url to serve on
+      publicUrl: `http://${ipAddress}:${port}/${dirPath}`,
       watch: false,
       cache: process.env.NODE_ENV === "production",
-      logLevel: 0,
-      cacheDir: ".cache", // The directory cache gets put in, defaults to .cache
-      contentHash: false, // Disable content hash from being included on the filename
-      global: `${name}`, // Expose modules as UMD under this name, disabled by default
-      minify: false, // Minify files, enabled if process.env.NODE_ENV === 'production'
-      scopeHoist: false, // Turn on experimental scope hoisting/tree shaking flag, for smaller production bundles
-      target: "browser", // Browser/node/electron, defaults to browser
-      bundleNodeModules: true, // By default, package.json dependencies are not included when using 'node' or 'electron' with 'target' option above. Set to true to adds them to the bundle, false by default
-      sourceMaps: true, // Enable or disable sourcemaps, defaults to enabled (minified builds currently always create sourcemaps)
-      autoInstall: true, // Enable or disable auto install of missing dependencies found during bundling
+
+      // The directory cache gets put in, defaults to .cache
+      cacheDir: ".cache",
+
+      // Disable content hash from being included on the filename
+      contentHash: false,
+
+      // Expose modules as UMD under this name, disabled by default
+      global: `${name}`,
+
+      // Minify files, enabled if process.env.NODE_ENV === 'production'
+      minify: false,
+
+      // Turn on experimental scope hoisting/tree shaking flag,
+      // for smaller production bundles
+      scopeHoist: false,
+
+      // Browser/node/electron, defaults to browser
+      target: "browser",
+
+      // By default, package.json dependencies are not included
+      // when using 'node' or 'electron' with 'target' option
+      // above. Set to true to adds them to the bundle
+      bundleNodeModules: true,
+
+      // Enable or disable sourcemaps, defaults to enabled
+      // (minified builds currently always create sourcemaps)
+      sourceMaps: true,
+
+      // Enable or disable auto install of missing dependencies
+      // found during bundling
+      autoInstall: true,
     }
     const bundler = new Bundler(entryPoint, options)
     return { name, entryPoint, dirPath, bundle: await bundler.bundle() }
@@ -191,12 +216,13 @@ Once we have the bundles, we can parse them to pull out the critical artifacts.
 
 ```javascript
 const plugins = bundles.map(({ bundle, ...rest }) => {
+  const bundlePath = bundle.entryAsset.parentBundle.name.replace(
+    path.join(__dirname, `../.builtPlugins`),
+    ""
+  )
   return {
     ...rest,
-    url: `http://${ipAddress}:${port}${bundle.entryAsset.parentBundle.name.replace(
-      path.join(__dirname, `../.builtPlugins`),
-      ""
-    )}`,
+    url: `http://${ipAddress}:${port}${bundlePath}`,
     css: Array.from(bundle.childBundles.values())
       .filter(b => b.type === "css")
       .map(

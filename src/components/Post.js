@@ -5,12 +5,23 @@ import Seo from "./Seo"
 import Layout from "./Layout"
 import PostMeta from "./PostMeta"
 import NextPrev from "./NextPrev"
-import { StaticQuery } from "gatsby"
+import { StaticQuery, graphql } from "gatsby"
 import Img from "gatsby-image"
-import { AVATAR_QUERY } from "./Header"
 import { useThemeUI, Styled, css as themeCss } from "theme-ui"
 import css from "@emotion/css"
 const { mdx } = require("@mdx-js/react")
+
+const FOOTER_AVATAR = graphql`
+  query FooterAvatar {
+    file(relativePath: { glob: "avatar.jpg" }) {
+      childImageSharp {
+        fluid(maxWidth: 400, maxHeight: 400) {
+          ...GatsbyImageSharpFluid_withWebp_tracedSVG
+        }
+      }
+    }
+  }
+`
 
 function slice(string, start, delCount, newSubStr) {
   return (
@@ -127,7 +138,7 @@ const Post = ({
               `}
             >
               <StaticQuery
-                query={AVATAR_QUERY}
+                query={FOOTER_AVATAR}
                 render={data => <Img fluid={data.file.childImageSharp.fluid} />}
               />{" "}
             </div>

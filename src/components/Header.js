@@ -8,7 +8,7 @@ import Img from "gatsby-image"
 import { Header, css as themeCss, Styled } from "theme-ui"
 import styled from "@emotion/styled"
 
-export const AVATAR_QUERY = graphql`
+const AVATAR_QUERY = graphql`
   query Avatar {
     file(relativePath: { glob: "avatar.jpg" }) {
       childImageSharp {

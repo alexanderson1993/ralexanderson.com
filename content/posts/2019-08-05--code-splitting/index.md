@@ -3,7 +3,7 @@ title: "JavaScript Start-up Optimization with Code Splitting"
 author: "Alex Anderson"
 category: "Devops"
 cover: hero.jpg
-date: 2019-08-02
+date: 2019-08-05
 ---
 
 ![Hero](hero.jpg)

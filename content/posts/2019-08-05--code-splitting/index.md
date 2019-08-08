@@ -156,7 +156,7 @@ Code splitting is one way to keep websites fast, and with modern tools it's pret
 
 ---
 
-<small><sup>1</sup> Facebook Mobile clocks in at 447MB at the time of writing. Twitter on the other hand is 116MB. Loading the first page of <twitter.com> on the other hand is only 7.8MB.</small>
+<small><sup>1</sup> Facebook Mobile clocks in at 447MB at the time of writing. Twitter on the other hand is 116MB. Loading the first page of [twitter.com](https://twitter.com) on the other hand is only 7.8MB.</small>
 
 <small><sup>2</sup> That said, I know of many gamers who are incredibly frustrated when they go to play their AAA video game just to find it has "required updates" that will take hours to download. Bundle size is something everyone should think about.</small>
 

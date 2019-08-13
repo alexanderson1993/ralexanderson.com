@@ -1,4 +1,4 @@
-import { Head, Split } from "gatsby-theme-mdx-deck"
+import { Head, Split, Notes } from "gatsby-theme-mdx-deck"
 
 <Head>
   <title>Assassinating GraphQL</title>
@@ -10,45 +10,107 @@ import { Head, Split } from "gatsby-theme-mdx-deck"
 
 ---
 
-## Hi there! 👋
+<Split>
 
-![/me.jpg](/me.jpg)
+# @ralex1993
+
+![/me.jpg](/avatar.jpg)
+
+</Split>
+
+<Notes>
+  Hi there! My Name is Alex. You can find me on Twitter @ralex1993. And today
+  we're going to talk about the game Assassin.
+</Notes>
 
 ---
 
 # Assassin
 
+<Notes>
+  Assassin can be considered a live-action roleplaying game where a large group
+  of people try to eliminate each other. Typically this game is facilitated by a
+  non-player moderator, but today we're going to work on an app that can
+  facilitate the game for us.
+</Notes>
+
 ---
 
 ![/assassin1.svg](/assassin1.svg)
+
+<Notes>
+  Suppose I start a game. I can't play it by myself, I have to invite a bunch of
+  friends.
+</Notes>
 
 ---
 
 ![/assassin2.svg](/assassin2.svg)
 
+<Notes>
+  All of us log into the app in a way that we are personally identified. It
+  helps if everyone knows each other, because we'll have to use the information
+  which the app gives us to find and eliminate our target. The target is
+  assigned by the app.
+</Notes>
+
 ---
 
 ![/assassin3.svg](/assassin3.svg)
+
+<Notes>
+  Targets are assigned in a round-robin. So, I'll be given a target. That's the
+  person that I'm supposed to eliminate. Only I know who my target is; nobody
+  else knows, unless I give it away.
+</Notes>
 
 ---
 
 ![/assassin4.svg](/assassin4.svg)
 
+<Notes>My target will also be given a target.</Notes>
+
 ---
 
 ![/assassin5.svg](/assassin5.svg)
+
+<Notes>
+  And so on until everyone has a target and everyone is a target. Even I will
+  have a target, though I won't know who my target is.
+</Notes>
 
 ---
 
 ![/assassin6.svg](/assassin6.svg)
 
+<Notes>
+  Once everyone has a target and the game starts, we can eliminate each other.
+  You can do this by gently poking with a spoon, or maybe everyone has to wear a
+  clothespin on their sleeve and you eliminate someone by taking their
+  clothespin. Either way, once someone is eliminated, they have to surrender on
+  the app.
+</Notes>
+
 ---
 
 ![/assassin7.svg](/assassin7.svg)
 
+<Notes>
+  Surrendering removes them from the game, and assigns their target to me. Now I
+  have to find and eliminate their target. The game keeps going until there is
+  only one player left, at which point that player is declared the winner!
+</Notes>
+
 ---
 
 # GraphQL
+
+<Notes>
+  Now that we know how the game works, we can talk about how it's made. In this
+  case, we'll be using GraphQL to facilitate the communication between the
+  client and the server. Who in here has never used GraphQL before? There are
+  three things which GraphQL allows us to do.
+</Notes>
 
 ---
 
@@ -59,11 +121,40 @@ query Games {
   games {
     id
     name
-    completed
     description
+    completed
   }
 }
 ```
+
+<Notes>
+  First, we can query for data. This is supposed to be a read-only operation.
+  This query gives us a list of games, including the name, description, and
+  whether the game is completed.
+</Notes>
+
+---
+
+```json
+{
+  "data": {
+    "games": [
+      {
+        "id": "3fa93991-a84b-4c12-b10b-90ef94ce5e46",
+        "name": "UtahJS Assassin",
+        "completed": false,
+        "description": "A friendly game, just gently poke with a spoon to win."
+      }
+    ]
+  }
+}
+```
+
+<Notes>
+  When our query resolves, it gives us exactly the data we ask for, and no more.
+  That's the beauty of GraphQL - it only gives us what we ask for, which in many
+  cases can ease the load on the API server.
+</Notes>
 
 ---
 
@@ -79,6 +170,15 @@ mutation CreateGame($name: String!, $description: String!) {
   }
 }
 ```
+
+<Notes>
+  Mutations operate much like queries, except they are only used for
+  write-operations. This includes creating, updating, and deleting records as
+  well as triggering events. This mutation creates a new game using the
+  parameters I provide. Notice that underneath I include the data that I want
+  the mutation to return. This helps me update my UI as a result of the
+  mutation. In this case, I can display the game in a list of existing games.
+</Notes>
 
 ---
 

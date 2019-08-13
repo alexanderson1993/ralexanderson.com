@@ -1,0 +1,144 @@
+import { Head, Split } from "gatsby-theme-mdx-deck"
+
+<Head>
+  <title>Assassinating GraphQL</title>
+</Head>
+
+# Assassinating GraphQL
+
+## With React Hooks, Apollo, and ❤
+
+---
+
+## Hi there! 👋
+
+![/me.jpg](/me.jpg)
+
+---
+
+# Assassin
+
+---
+
+![/assassin1.svg](/assassin1.svg)
+
+---
+
+![/assassin2.svg](/assassin2.svg)
+
+---
+
+![/assassin3.svg](/assassin3.svg)
+
+---
+
+![/assassin4.svg](/assassin4.svg)
+
+---
+
+![/assassin5.svg](/assassin5.svg)
+
+---
+
+![/assassin6.svg](/assassin6.svg)
+
+---
+
+![/assassin7.svg](/assassin7.svg)
+
+---
+
+# GraphQL
+
+---
+
+# Queries
+
+```GraphQL
+query Games {
+  games {
+    id
+    name
+    completed
+    description
+  }
+}
+```
+
+---
+
+# Mutations
+
+```GraphQL
+mutation CreateGame($name: String!, $description: String!) {
+  createGame(name: $name, description: $description) {
+    id
+    name
+    completed
+    description
+  }
+}
+```
+
+---
+
+# Subscriptions
+
+```GraphQL
+subscription GameList {
+  gameUpdate {
+    id
+    name
+    completed
+    description
+  }
+}
+```
+
+---
+
+# Apollo Hooks
+
+- `useQuery`
+- `useMutation`
+- `useSubscription`
+- `useSubscribeToMore`\*
+
+\* A custom hook
+
+---
+
+# Demo
+
+## `useQuery`
+
+---
+
+# Demo
+
+## `useMutation`
+
+---
+
+# Demo
+
+## `useSubscription`
+
+---
+
+# Demo
+
+## `useSubscribeToMore`
+
+---
+
+# Conclusion
+
+- GraphQL is great!
+- Hooks are awesome!
+
+---
+
+## Thanks 🙌
+
+<https://twitter.com/ralex1993>

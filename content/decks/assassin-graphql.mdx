@@ -21,8 +21,100 @@ import { Head, Split, Notes } from "gatsby-theme-mdx-deck"
 <Notes>
   Hi there! My Name is Alex. You can find me on Twitter @ralex1993. Yes that is
   my birth year. Sorry if that makes you feel old; sorry if that makes you feel
-  young. And today we're going to talk about the game Assassin.
+  young. And today we're going to talk about GraphQL and the game Assassin.
 </Notes>
+
+---
+
+# GraphQL
+
+## A query language for your API
+
+<Notes>
+  GraphQL is a hot new tech - we just heared about it in the last session.
+</Notes>
+
+---
+
+> It's an organization layer that you can put in front of all of your data sources, and then get exactly the data you want.
+
+<cite>Eve Porcello</cite>
+
+---
+
+```json
+{
+  "data": {
+    "person": {
+      "name": "Darth Vader",
+      "birthYear": "41.9BBY",
+      "planet": {
+        "name": "Tatooine"
+      },
+      "films": [
+        { "title": "A New Hope" },
+        { "title": "The Empire Strikes Back" },
+        { "title": "Return of the Jedi" },
+        { "title": "Revenge of the Sith" }
+      ]
+    }
+  }
+}
+```
+
+---
+
+```json
+{
+  "data": {
+    "person": {
+      “name":
+      "birthYear"
+      "planet": {
+        "name"
+      },
+      "films": [
+        { “title" }
+
+
+
+      ]
+    }
+  }
+}
+```
+
+---
+
+```GraphQL
+query StarWarsPerson {
+ person(personID: 4) {
+    name,
+    birthYear,
+    homeworld {
+      name
+    },
+    filmConnection {
+      films {
+        title
+      }
+    }
+  }
+}
+```
+
+---
+
+- **Queries**: Get data
+- **Mutations**: Change data
+- **Subscriptions**: Get updates
+
+---
+
+- One Endpoint
+- Single request - lots of data
+- Statically Typed
+- Auto-documented
 
 ---
 
@@ -211,8 +303,22 @@ subscription GameList($gameId: ID!) {
 
 ---
 
+# Demo
+
+## GraphQL Playground
+
+<Notes>
+  Lets take some of these queries and try them out on our GraphQL server. Apollo
+  Server comes with GraphQL playgrounds, which is a simple IDE for writing and
+  executing GraphQL requests.
+</Notes>
+
+---
+
 - CURL/Fetch
--
+- Relay
+- Lokka
+- URQL
 - React Apollo
 
 <Notes>
@@ -225,6 +331,20 @@ subscription GameList($gameId: ID!) {
 
 ---
 
+# Setting Up Apollo
+
+https://www.apollographql.com/docs/react/essentials/get-started/
+
+https://www.apollographql.com/docs/react/advanced/subscriptions/
+
+<Notes>
+  I'm not going to cover how to set up Apollo on your project - the
+  documentation is really good and you should be able to figure it out yourself.
+  Note that setting up subscriptions takes a bit more effort.
+</Notes>
+
+---
+
 # Apollo Hooks
 
 - `useQuery`
@@ -233,6 +353,15 @@ subscription GameList($gameId: ID!) {
 - `useSubscribeToMore`\*
 
 \* A custom hook
+
+<Notes>
+  Here are the hooks we are going to be playing with. We'll useQuery to get the
+  list of games for a user; useMutation for surrendering during a game, and
+  useSubscription for showing a toast notification when an action happens during
+  a game. useSubscribeToMore is a special hook which I created which allows us
+  to use the subscribeToMore function which Apollo provides to declaratively
+  subscribe to and update query data.
+</Notes>
 
 ---
 
@@ -257,6 +386,20 @@ subscription GameList($gameId: ID!) {
 # Demo
 
 ## `useSubscribeToMore`
+
+---
+
+# What about testing?
+
+## Use `<MockedProvider>`
+
+<Notes>
+  Apollo has a MockedProvider component which you can use to test your Apollo
+  powered components in isolation. Just give the provider some mocked data, and
+  you can simulate any network response as if it were coming directly from the
+  server. You can use this in storybook pages or as part of your Jest/React
+  Testing Library tests.
+</Notes>
 
 ---
 

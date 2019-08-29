@@ -8,6 +8,8 @@ import { Head, Split, Notes } from "gatsby-theme-mdx-deck"
 
 ## With React Hooks, Apollo, and ❤
 
+### Press Option + P to see Speaker Notes
+
 ---
 
 <Split>
@@ -31,7 +33,8 @@ import { Head, Split, Notes } from "gatsby-theme-mdx-deck"
 ## A query language for your API
 
 <Notes>
-  GraphQL is a hot new tech - we just heared about it in the last session.
+  GraphQL is a hot new tech - we just heared about it in the last session. It
+  provides an easy way to query APIs.
 </Notes>
 
 ---
@@ -39,6 +42,11 @@ import { Head, Split, Notes } from "gatsby-theme-mdx-deck"
 > It's an organization layer that you can put in front of all of your data sources, and then get exactly the data you want.
 
 <cite>Eve Porcello</cite>
+
+<Notes>
+  Eve is a prolific GraphQL advocate and educator. She said this on this episode
+  of React Podcast: https://reactpodcast.simplecast.fm/58
+</Notes>
 
 ---
 
@@ -62,6 +70,12 @@ import { Head, Split, Notes } from "gatsby-theme-mdx-deck"
 }
 ```
 
+<Notes>
+  Suppose we have this structure of JSON data that we want to get from the Star
+  Wars API. With REST, we would have to grab each individual part in a series of
+  requests.
+</Notes>
+
 ---
 
 ```json
@@ -84,16 +98,21 @@ import { Head, Split, Notes } from "gatsby-theme-mdx-deck"
 }
 ```
 
+<Notes>
+  GraphQL works by removing the return data, leaving us with the keys and
+  structure of the data.
+</Notes>
+
 ---
 
 ```GraphQL
 query StarWarsPerson {
  person(personID: 4) {
-    name,
-    birthYear,
+    name
+    birthYear
     homeworld {
       name
-    },
+    }
     filmConnection {
       films {
         title
@@ -103,11 +122,21 @@ query StarWarsPerson {
 }
 ```
 
+<Notes>
+  By changing things around a little bit, we are able to get a fully-formed
+  GraphQL query which gives us exactly the data we want in a single network
+  request.
+</Notes>
+
 ---
 
 - **Queries**: Get data
 - **Mutations**: Change data
-- **Subscriptions**: Get updates
+- **Subscriptions**: Get updates (Requires WebSockets)
+
+<Notes>
+  GraphQL gives us a few primitives which we can use to access the API.
+</Notes>
 
 ---
 
@@ -116,6 +145,8 @@ query StarWarsPerson {
 - Statically Typed
 - Auto-documented
 
+<Notes>By design GraphQL comes with a handful of nice things.</Notes>
+
 ---
 
 # React Hooks
@@ -123,6 +154,13 @@ query StarWarsPerson {
 - Use in function components
 - "Hook" into state and lifecycle
 - Reusable and composable
+- Provide some performance tools
+
+<Notes>
+  While we are talking about React Hooks, many of these principles apply across
+  the board to any GraphQL library and view framework. If you don't know about
+  hooks, here's the low-down.
+</Notes>
 
 ---
 
@@ -219,10 +257,11 @@ query StarWarsPerson {
 ```GraphQL
 query Games {
   games {
-    id
+    game_id
     name
     description
     completed
+    started
   }
 }
 ```
@@ -240,10 +279,11 @@ query Games {
   "data": {
     "games": [
       {
-        "id": "3fa93991-a84b-4c12-b10b-90ef94ce5e46",
+        "game_id": "3fa93991-a84b-4c12-b10b-90ef94ce5e46",
         "name": "UtahJS Assassin",
+        "description": "A friendly game, just gently poke with a spoon to win.",
         "completed": false,
-        "description": "A friendly game, just gently poke with a spoon to win."
+        "started": true
       }
     ]
   }
@@ -263,7 +303,7 @@ query Games {
 ```GraphQL
 mutation Surrender($gameId: ID!) {
   surrender(gameId: $gameId) {
-    id
+    game_id
     me {
       id
       dead
@@ -288,15 +328,15 @@ mutation Surrender($gameId: ID!) {
 # Subscriptions
 
 ```GraphQL
-subscription GameList($gameId: ID!) {
-  gameUpdate(gameId: $gameId) {
-    id
+subscription GameList {
+  gameUpdate {
+    game_id
     name
-    playerCount
-    aliveCount
+    completed
+    description
+    started
   }
 }
-
 ```
 
 <Notes>
@@ -358,17 +398,12 @@ https://www.apollographql.com/docs/react/advanced/subscriptions/
 - `useQuery`
 - `useMutation`
 - `useSubscription`
-- `useSubscribeToMore`\*
-
-\* A custom hook
 
 <Notes>
   Here are the hooks we are going to be playing with. We'll useQuery to get the
   list of games for a user; useMutation for surrendering during a game, and
   useSubscription for showing a toast notification when an action happens during
-  a game. useSubscribeToMore is a special hook which I created which allows us
-  to use the subscribeToMore function which Apollo provides to declaratively
-  subscribe to and update query data.
+  a game.
 </Notes>
 
 ---
@@ -388,12 +423,6 @@ https://www.apollographql.com/docs/react/advanced/subscriptions/
 # Demo
 
 ## `useSubscription`
-
----
-
-# Demo
-
-## `useSubscribeToMore`
 
 ---
 

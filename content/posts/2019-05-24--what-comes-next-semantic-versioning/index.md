@@ -4,11 +4,10 @@ author: "Alex Anderson"
 category: "Devops"
 cover: hero.jpeg
 date: 2019-05-24
+subtext: "This is a post in a series about code projects, open source, build tools, and deployment."
 ---
 
 ![Hero](hero.jpeg)
-
-_This is a post in a series about code projects, open source, build tools, and deployment._
 
 People often get really excited about new versions of things - iOS 13, Chrome 73, ES2018. All of these represent the latest and greatest, and everyone is itching for the 2.0 of whatever thing they're into.
 

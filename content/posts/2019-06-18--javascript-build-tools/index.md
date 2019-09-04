@@ -4,11 +4,10 @@ author: "Alex Anderson"
 category: "Devops"
 cover: hero.jpg
 date: 2019-06-18
+subtext: "This is a post in a series about code projects, open source, build tools, and deployment."
 ---
 
 ![Hero](hero.jpg)
-
-_This is a post in a series about code projects, open source, build tools, and deployment._
 
 JavaScript really has grown up in the past decade. It used to be slow and localized to only a web browser context. With the advent of Node.js, not only is JavaScript used on the web, but it can now be used for servers, command-line tools, and desktop applications.
 

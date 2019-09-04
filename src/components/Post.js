@@ -64,6 +64,7 @@ const Post = ({
 }) => {
   const { theme } = useThemeUI()
   const body = processImagePaths(post.body, imagePaths)
+  console.log(post)
   return (
     <Layout content>
       <Seo title={post.title} description={post.excerpt} />
@@ -77,14 +78,20 @@ const Post = ({
           h3 {
             margin-bottom: 0.5rem;
           }
-          .gatsby-resp-image-image {
+          .caption {
+            display: block;
+            margin-bottom: 2rem;
+            text-align: center;
+          }
+          .gatsby-image-wrapper {
             border: 0;
             display: block;
-            border-radius: 10;
+            border-radius: 10px;
             overflow: hidden;
-            border: 1px solid ${theme.colors.muted};
             position: absolute;
             top: 0;
+            margin-bottom: 2rem;
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
           }
         `}
       >
@@ -97,6 +104,16 @@ const Post = ({
           {post.title}
         </h1>
         <PostMeta {...post} />
+        <p
+          css={css`
+            margin: 1rem 0;
+          `}
+        >
+          <small>
+            <em>{post.subtext}</em>
+          </small>
+        </p>
+
         <MDXRenderer
           scope={{
             mdx: (...args) => {

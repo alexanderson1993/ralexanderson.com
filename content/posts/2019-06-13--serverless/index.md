@@ -4,11 +4,10 @@ author: "Alex Anderson"
 category: "Devops"
 cover: hero.jpeg
 date: 2019-06-13
+subtext: "This is a post in a series about code projects, open source, build tools, and deployment."
 ---
 
 ![Hero](hero.jpeg)
-
-_This is a post in a series about code projects, open source, build tools, and deployment._
 
 In March of 2006, Amazon Web Services launched and changed everything<sup>1</sup>. Before, there were a bunch of different hosting providers that you could pay to rent out an entire server on one of their server racks, or you could just host the server yourself. Renting an entire server is a costly endeavor, though.
 

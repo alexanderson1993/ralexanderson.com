@@ -4,11 +4,10 @@ author: "Alex Anderson"
 category: "Devops"
 cover: hero.jpeg
 date: 2019-06-05
+subtext: "This is a post in a series about code projects, open source, build tools, and deployment."
 ---
 
 ![Hero](hero.jpeg)
-
-_This is a post in a series about code projects, open source, build tools, and deployment._
 
 The second hardest thing in programming is naming stuff.<sup>1</sup> Maybe that's why every pattern and every trend has to have a name and branded website. LAMP. MEAN/MERN. MARS. Whatever.
 

@@ -4,11 +4,10 @@ author: "Alex Anderson"
 category: "Devops"
 cover: hero.jpg
 date: 2019-08-05
+subtext: "This is a post in a series about code projects, open source, build tools, and deployment."
 ---
 
 ![Hero](hero.jpg)
-
-_This is a post in a series about code projects, open source, build tools, and deployment._
 
 There are a number of performance considerations which web developers have to consider that were never a worry of traditional app developers. One of the biggest is bundle size. If you take a look at video games or mobile apps (I'm looking at you, Facebook<sup>1</sup>), the code being shipped is massive. But that's because bundle size isn't a huge constraint. The app is either shipped on a Blu-Ray, packed in a small cartridge, or downloaded once or infrequently from the internet<sup>2</sup>.
 

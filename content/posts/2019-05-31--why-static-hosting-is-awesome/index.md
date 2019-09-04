@@ -4,11 +4,10 @@ author: "Alex Anderson"
 category: "Devops"
 cover: hero.jpeg
 date: 2019-05-31
+subtext: "This is a post in a series about code projects, open source, build tools, and deployment."
 ---
 
 ![Hero](hero.jpeg)
-
-_This is a post in a series about code projects, open source, build tools, and deployment._
 
 Can I tell you a secret? I run a (very) modest internet business distributing [spaceship simulator software](https://thoriumsim.com). Guess how much it costs me to run?
 
@@ -35,7 +34,7 @@ Dynamic websites are great, and definitely necessary when you have a lot of rapi
 I specifically mentioned Wordpress because it made dynamic sites easy to set up for anyone! All you need is a webserver that runs PHP and MySQL - both free and open-source. However, web hosting isn't cheap, especially depending on how much traffic you have. Also, your precious website could easily be DDoS'd if a blog post happens to make the front page of Reddit and you get a lot of unanticipated traffic.
 
 ![Who enjoys these guys?](database-error.png)
-<small>Who enjoys these guys?</small>
+<small className="caption">Who enjoys these guys?</small>
 
 Does your blog really need to be dynamically hosted? The content of the blog probably changes a few times a week, at most. Maybe a bit more often if you have comments, but if you don't have comments then what is the point of dynamic hosting?
 

@@ -4,11 +4,10 @@ author: "Alex Anderson"
 category: "Devops"
 cover: hero.jpg
 date: 2019-08-02
+subtext: "This is a post in a series about code projects, open source, build tools, and deployment."
 ---
 
 ![Hero](hero.jpg)
-
-_This is a post in a series about code projects, open source, build tools, and deployment._
 
 Modern JavaScript development is awesome! You can go to NPM (or another [package repository](https://github.com/features/package-registry)) and get code that someone else has written and load it into your application without having to copy/paste or write it yourself. One great example is [Lodash](https://lodash.com/), a package that bills itself as
 

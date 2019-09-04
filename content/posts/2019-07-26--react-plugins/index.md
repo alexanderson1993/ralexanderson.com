@@ -4,11 +4,10 @@ author: "Alex Anderson"
 category: "React"
 cover: hero.jpg
 date: 2019-07-26
+subtext: "This is a pretty complex, experimental blog post, and likely unsuited to beginners. You might learn some interesting stuff though. Proceed with caution."
 ---
 
 ![Hero](hero.jpg)
-
-_This is a pretty complex, experimental blog post, and likely unsuited to beginners. You might learn some interesting stuff though. Proceed with caution._
 
 React can do some really wild stuff. In this post, I'll demonstrate loading remote React components and how that can be (ab)used to create a plugin system for a desktop-based React app. This post will blend a bit of React, some [build tools](/blog/javascript-build-tools), Electron, and a bit of experimenting. By the end, you'll know what it is, how to do it, and some of the pitfalls that you might find.
 

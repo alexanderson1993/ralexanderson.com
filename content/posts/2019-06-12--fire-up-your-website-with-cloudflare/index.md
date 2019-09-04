@@ -4,6 +4,7 @@ author: "Alex Anderson"
 category: "Devops"
 cover: hero.jpeg
 date: 2019-06-12
+subtext: "This is a post in a series about code projects, open source, build tools, and deployment."
 ---
 
 ![Hero](hero.jpeg)

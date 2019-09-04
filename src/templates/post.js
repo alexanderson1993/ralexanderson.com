@@ -27,6 +27,7 @@ export const pageQuery = graphql`
       body
       author
       category
+      subtext
     }
     site: site {
       siteMetadata {

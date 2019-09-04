@@ -64,6 +64,7 @@ exports.sourceNodes = ({ actions, schema }) => {
         },
         date: { type: `Date`, extensions: { dateformat: {} } },
         category: { type: `String` },
+        subtext: { type: `String` },
         author: { type: `String` },
         fileAbsolutePath: {
           type: `String`,
@@ -123,6 +124,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
             category
             body
             fileAbsolutePath
+            subtext
             cover {
               children {
                 ... on ImageSharp {
@@ -260,6 +262,7 @@ exports.onCreateNode = ({ node, actions, getNode, createNodeId }) => {
       slug,
       date: node.frontmatter.date,
       category: node.frontmatter.category,
+      subtext: node.frontmatter.subtext,
       author: node.frontmatter.author,
       cover: node.frontmatter.cover,
     }

@@ -4,11 +4,10 @@ author: "Alex Anderson"
 category: "Thorium"
 cover: hero.jpg
 date: 2019-08-29
+subtext: "This is a post in a series about Thorium stories, tricks, and techniques. Learn more at https://thoriumsim.com"
 ---
 
 ![Hero](hero.jpg)
-
-_This is a post in a series about Thorium stories, tricks, and techniques. Learn more at [https://thoriumsim.com](https://thoriumsim.com)_
 
 Thorium is designed to work in a regular web browser. It does have a dedicated Electron client which you can use to lock down a computer station, automatically connect to running servers, and provide more controls for the flight director, but those are just progressive enhancements. If Thorium doesn't work in a standard version of Chrome, I've done my job wrong.
 

@@ -55,7 +55,6 @@ const Post = ({ data: { post }, location, previous, next, imagePaths }) => {
   const body = processImagePaths(post.body, imagePaths);
   const imageUrl = imagePaths[0] && `${location.origin}${imagePaths[0].src}`;
   const url = location.href;
-  console.log(location);
   return (
     <Layout content>
       <Seo
@@ -63,6 +62,7 @@ const Post = ({ data: { post }, location, previous, next, imagePaths }) => {
         description={post.excerpt}
         image={imageUrl}
         url={url}
+        cardType="summary_large_image"
       />
       <article
         css={css`

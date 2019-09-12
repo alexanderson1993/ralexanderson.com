@@ -1,8 +1,8 @@
-import React from "react"
-import Helmet from "react-helmet"
-import { StaticQuery, graphql } from "gatsby"
+import React from "react";
+import Helmet from "react-helmet";
+import { StaticQuery, graphql } from "gatsby";
 
-const Seo = ({ title, description, image, url }) => {
+const Seo = ({ title, description, image, url, cardType = "summary" }) => {
   return (
     <StaticQuery
       query={graphql`
@@ -57,7 +57,7 @@ const Seo = ({ title, description, image, url }) => {
             />
             <meta property="og:type" content="website" />
             {/* Twitter Card tags */}
-            <meta name="twitter:card" content="summary" />
+            <meta name="twitter:card" content={cardType} />
             <meta
               name="twitter:image"
               content={
@@ -74,10 +74,10 @@ const Seo = ({ title, description, image, url }) => {
                 .url.replace("https://twitter.com/", "")}
             />
           </Helmet>
-        )
+        );
       }}
     />
-  )
-}
+  );
+};
 
-export default Seo
+export default Seo;

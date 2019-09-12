@@ -93,6 +93,9 @@ const Post = ({
             box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
             min-height: 500px;
           }
+          footer .gatsby-image-wrapper {
+            min-height: unset;
+          }
         `}
       >
         <h1

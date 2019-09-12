@@ -64,7 +64,6 @@ const Post = ({
 }) => {
   const { theme } = useThemeUI()
   const body = processImagePaths(post.body, imagePaths)
-  console.log(post)
   return (
     <Layout content>
       <Seo title={post.title} description={post.excerpt} />
@@ -92,6 +91,7 @@ const Post = ({
             top: 0;
             margin-bottom: 2rem;
             box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+            min-height: 500px;
           }
         `}
       >

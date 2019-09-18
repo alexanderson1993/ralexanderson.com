@@ -199,9 +199,6 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
             { absolutePath: p }
           )
           if (result) {
-            if (!result.data.allFile.nodes[0]) {
-              return null
-            }
             return result.data.allFile.nodes[0].childImageSharp.fluid
           }
           return null

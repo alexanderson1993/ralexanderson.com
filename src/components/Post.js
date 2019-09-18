@@ -1,15 +1,15 @@
-import React from "react";
+import React from "react"
 
-import { MDXRenderer } from "gatsby-plugin-mdx";
-import Seo from "./Seo";
-import Layout from "./Layout";
-import PostMeta from "./PostMeta";
-import NextPrev from "./NextPrev";
-import { StaticQuery, graphql } from "gatsby";
-import Img from "gatsby-image";
-import { useThemeUI, Styled, css as themeCss } from "theme-ui";
-import css from "@emotion/css";
-const { mdx } = require("@mdx-js/react");
+import { MDXRenderer } from "gatsby-plugin-mdx"
+import Seo from "./Seo"
+import Layout from "./Layout"
+import PostMeta from "./PostMeta"
+import NextPrev from "./NextPrev"
+import { StaticQuery, graphql } from "gatsby"
+import Img from "gatsby-image"
+import { useThemeUI, Styled, css as themeCss } from "theme-ui"
+import css from "@emotion/css"
+const { mdx } = require("@mdx-js/react")
 
 const FOOTER_AVATAR = graphql`
   query FooterAvatar {
@@ -21,24 +21,25 @@ const FOOTER_AVATAR = graphql`
       }
     }
   }
-`;
+`
 
 function slice(string, start, delCount, newSubStr) {
   return (
     string.slice(0, start) +
     newSubStr +
     string.slice(start + Math.abs(delCount))
-  );
+  )
 }
 function processImagePaths(body, imagePaths) {
-  const regExp = /"src": "(.*)",/g;
-  const matches = [];
-  let output = [];
+  const regExp = /"src": "(.*)",/g
+  const matches = []
+  let output = []
   while ((output = regExp.exec(body)) !== null) {
-    matches.push({ len: output[0].length, index: output.index });
+    matches.push({ len: output[0].length, index: output.index })
   }
   for (let i = matches.length - 1; i >= 0; i--) {
-    const image = imagePaths[i];
+    const image = imagePaths[i]
+    console.log(image, imagePaths)
     body = slice(
       body,
       matches[i].index,
@@ -46,15 +47,15 @@ function processImagePaths(body, imagePaths) {
       Object.entries(image)
         .map(([key, value]) => `"${key}": \`${value}\`,`)
         .join("\n")
-    );
+    )
   }
-  return body;
+  return body
 }
 const Post = ({ data: { post }, location, previous, next, imagePaths }) => {
-  const { theme } = useThemeUI();
-  const body = processImagePaths(post.body, imagePaths);
-  const imageUrl = imagePaths[0] && `${location.origin}${imagePaths[0].src}`;
-  const url = location.href;
+  const { theme } = useThemeUI()
+  const body = processImagePaths(post.body, imagePaths)
+  const imageUrl = imagePaths[0] && `${location.origin}${imagePaths[0].src}`
+  const url = location.href
   return (
     <Layout content>
       <Seo
@@ -118,10 +119,10 @@ const Post = ({ data: { post }, location, previous, next, imagePaths }) => {
           scope={{
             mdx: (...args) => {
               if (args[0] === "img") {
-                const { alt, ...fluid } = args[1];
-                return mdx(Img, { alt, fluid });
+                const { alt, ...fluid } = args[1]
+                return mdx(Img, { alt, fluid })
               }
-              return mdx(...args);
+              return mdx(...args)
             },
           }}
         >
@@ -175,7 +176,7 @@ const Post = ({ data: { post }, location, previous, next, imagePaths }) => {
         </footer>
       </article>
     </Layout>
-  );
-};
+  )
+}
 
-export default Post;
+export default Post

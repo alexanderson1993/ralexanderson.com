@@ -39,15 +39,16 @@ function processImagePaths(body, imagePaths) {
   }
   for (let i = matches.length - 1; i >= 0; i--) {
     const image = imagePaths[i]
-    console.log(image, imagePaths)
-    body = slice(
-      body,
-      matches[i].index,
-      matches[i].len,
-      Object.entries(image)
-        .map(([key, value]) => `"${key}": \`${value}\`,`)
-        .join("\n")
-    )
+    if (image) {
+      body = slice(
+        body,
+        matches[i].index,
+        matches[i].len,
+        Object.entries(image)
+          .map(([key, value]) => `"${key}": \`${value}\`,`)
+          .join("\n")
+      )
+    }
   }
   return body
 }

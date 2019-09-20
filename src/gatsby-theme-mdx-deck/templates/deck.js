@@ -1,9 +1,10 @@
-import React from "react"
-import { graphql } from "gatsby"
-import { MDXRenderer } from "gatsby-plugin-mdx"
-import Deck from "gatsby-theme-mdx-deck/src/components/deck"
-import splitSlides from "gatsby-theme-mdx-deck/src/split-slides"
-import css from "@emotion/css"
+import React from "react";
+import { graphql } from "gatsby";
+import { MDXRenderer } from "gatsby-plugin-mdx";
+import Deck from "gatsby-theme-mdx-deck/src/components/deck";
+import splitSlides from "gatsby-theme-mdx-deck/src/split-slides";
+import css from "@emotion/css";
+import { Global } from "@emotion/core";
 
 export const pageQuery = graphql`
   query($id: String!) {
@@ -12,10 +13,10 @@ export const pageQuery = graphql`
       body
     }
   }
-`
+`;
 
 const wrapper = props => {
-  const slides = splitSlides(props)
+  const slides = splitSlides(props);
   return (
     <div
       css={css`
@@ -38,6 +39,10 @@ const wrapper = props => {
         pre {
           font-size: 2rem;
         }
+        p {
+          width: 100%;
+          height: 100%;
+        }
         img {
           max-height: 90vh;
         }
@@ -52,14 +57,21 @@ const wrapper = props => {
         }
       `}
     >
+      <Global
+        styles={css`
+          .gatsby-resp-image-background-image {
+            padding-bottom: 0 !important;
+          }
+        `}
+      ></Global>
       <Deck {...props} slides={slides} />
     </div>
-  )
-}
+  );
+};
 
 const components = {
   wrapper,
-}
+};
 
 export default ({
   data: {
@@ -67,6 +79,6 @@ export default ({
   },
   ...props
 }) => {
-  const Component = props => <MDXRenderer {...props} children={body} />
-  return <Component {...props} components={components} />
-}
+  const Component = props => <MDXRenderer {...props} children={body} />;
+  return <Component {...props} components={components} />;
+};

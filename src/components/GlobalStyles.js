@@ -1,9 +1,9 @@
-import React from "react"
-import { Global, css } from "@emotion/core"
-import { useThemeUI } from "theme-ui"
+import React from "react";
+import { Global, css } from "@emotion/core";
+import { useThemeUI } from "theme-ui";
 
 const GlobalStyles = () => {
-  const { theme } = useThemeUI()
+  const { theme } = useThemeUI();
   return (
     <Global
       styles={css`
@@ -27,9 +27,13 @@ const GlobalStyles = () => {
         p {
           margin: 0;
         }
+        .gatsby-resp-image-background-image {
+          padding-bottom: 0;
+          background-color: red;
+        }
       `}
     />
-  )
-}
+  );
+};
 
-export default GlobalStyles
+export default GlobalStyles;

@@ -3,7 +3,7 @@ title: "Game Server State Management"
 author: "Alex Anderson"
 category: "Thorium"
 cover: hero.jpg
-date: 2019-09-11
+date: 2019-09-18
 subtext: "This is a post in a series about Thorium stories, tricks, and techniques. Learn more at https://thoriumsim.com"
 ---
 

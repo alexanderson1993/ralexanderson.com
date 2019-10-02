@@ -1,12 +1,12 @@
-import { Link } from "gatsby"
-import React from "react"
+import { Link } from "gatsby";
+import React from "react";
 // import { ScreenWidthContext } from "../../layouts"
-import config from "../../content/meta/config"
+import config from "../../content/meta/config";
 // import Menu from "./Menu"
-import { StaticQuery, graphql } from "gatsby"
-import Img from "gatsby-image"
-import { Header, css as themeCss, Styled } from "theme-ui"
-import styled from "@emotion/styled"
+import { StaticQuery, graphql } from "gatsby";
+import Img from "gatsby-image";
+import { Header, css as themeCss, Styled } from "theme-ui";
+import styled from "@emotion/styled";
 
 const AVATAR_QUERY = graphql`
   query Avatar {
@@ -18,12 +18,13 @@ const AVATAR_QUERY = graphql`
       }
     }
   }
-`
+`;
 
 const HeaderComponent = styled(Header)`
   align-items: center;
   justify-content: center;
   display: flex;
+  flex-wrap: wrap;
   top: 0;
   width: 100%;
   justify-content: space-between;
@@ -65,7 +66,7 @@ const HeaderComponent = styled(Header)`
       object-fit: contain;
     }
   }
-`
+`;
 
 const NavMenu = styled.nav`
   border-top: none;
@@ -73,14 +74,13 @@ const NavMenu = styled.nav`
   display: flex;
   position: relative;
   justify-content: flex-end;
-  padding-left: 50px;
   transition: none;
-`
+`;
 const ItemList = styled.ul`
   display: flex;
   justify-content: flex-end;
   padding: 0;
-`
+`;
 
 const Item = ({ to, children }) => {
   return (
@@ -97,8 +97,8 @@ const Item = ({ to, children }) => {
         {children}
       </Link>
     </li>
-  )
-}
+  );
+};
 const HeaderComp = () => {
   const pages = [
     { to: "/blog/", label: "Blog" },
@@ -107,7 +107,7 @@ const HeaderComp = () => {
     // { to: "/search/", label: "Search" },
     // { to: "/about", label: "About" },
     // { to: "/contact/", label: "Contact" },
-  ]
+  ];
   return (
     <HeaderComponent css={themeCss({ padding: 3 })}>
       <Link to="/" className="logoType">
@@ -139,7 +139,7 @@ const HeaderComp = () => {
         </ItemList>
       </NavMenu>
     </HeaderComponent>
-  )
-}
+  );
+};
 
-export default HeaderComp
+export default HeaderComp;

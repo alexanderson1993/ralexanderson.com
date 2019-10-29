@@ -199,7 +199,11 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
             { absolutePath: p }
           )
           if (result) {
-            return result.data.allFile.nodes[0].childImageSharp.fluid
+            return (
+              result.data.allFile.nodes[0] &&
+              result.data.allFile.nodes[0].childImageSharp &&
+              result.data.allFile.nodes[0].childImageSharp.fluid
+            )
           }
           return null
         })

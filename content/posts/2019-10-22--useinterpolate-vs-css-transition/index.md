@@ -165,6 +165,6 @@ Here's the final code for interpolating values:
 
 And here's what it looks like:
 
-![CRM](crm.gif)
+![CRM](/crm.gif)
 
 Lesson learned: Sometimes, you can do it simpler and faster. Strive to find those solutions.

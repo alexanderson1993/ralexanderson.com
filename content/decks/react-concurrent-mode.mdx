@@ -1,0 +1,53 @@
+import { Head, Split, Notes } from "gatsby-theme-mdx-deck"
+
+<Head>
+  <title>React Concurrent Mode</title>
+</Head>
+
+# React Concurrent Mode
+
+## Improving CPU- and IO-bound operations in React
+
+### Press Option + P to see Speaker Notes
+
+---
+
+- Overview of React
+  - Virtual DOM
+  - Reconciler
+    - Render Phase
+    - Commit Phase
+  - Blocking Rendering
+  - Fiber
+    - https://techcrunch.com/2017/04/18/facebook-announces-react-fiber-a-rewrite-of-its-react-framework/
+    - https://github.com/acdlite/react-fiber-architecture
+  - Concurrent Mode
+    - Interruptable Rendering
+    - Intentional Loading Sequences
+    - Concurrently work on several state updates at the same time
+      - CPU-Bound: More urgent updates interrupt Rendering
+      - IO-Bound: Render UIs in-memory before data arrives.
+    - More opinionated
+  - Show Feature Comparison (https://reactjs.org/docs/concurrent-mode-adoption.html#feature-comparison) and then highlight the parts we'll be discussing in this talk
+  - Demos
+    - Blocking state updates
+    - Suspense for Data Fetching
+    - SuspenseList
+    - useTransition
+  - More cool stuff
+    - Streaming SSR
+    - Prerendering with `hidden` attribute
+    - useDeferredValue
+  - Pitfalls
+    - String Refs
+    - Legacy Context
+    - ReactDOM.findDOMNode
+    - unsafe Class Lifecycles
+      - unsafe, because the behaviors might not be idempotent, and sometimes lifecycle methods will run multiple times as part of a single "render" cycle
+  - Use React.StrictMode to discover problems.
+    - Don't impact Production at all.
+    - Checks for all of the above
+    - Double-invokes `constructor`, `render`, `setState`, and `getDerrivedStateFromProps` to surface any side-effect bugs.
+  - Use React Hooks - not as succeptable to side-effect bugs.
+
+---

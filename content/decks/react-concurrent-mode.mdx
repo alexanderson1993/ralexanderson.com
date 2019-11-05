@@ -12,6 +12,296 @@ import { Head, Split, Notes } from "gatsby-theme-mdx-deck"
 
 ---
 
+// Show React Logo Here
+
+# Overview of React
+
+<Notes>
+  Concurrent mode touches a lot on the internals of React, so we're going to do
+  a bit of a dive into how React works under the hood.
+</Notes>
+
+---
+
+# `v = f(s)`
+
+<Notes>
+  React works on a simple principle: Your view is a function of your state. The
+  view is what you see in the browser; your DOM nodes. State is data that is
+  inserted into the function at different points through user input, network
+  requests, and the like. The function is the React code that us developers
+  write.
+</Notes>
+
+---
+
+# Virtual <del>DOM</del> Tree
+
+// Show virtual dom picture Here
+
+<Notes>
+  One of the biggest innovations of React is the virtual dom. It is a misnomer,
+  since it doesn't map exactly to the dom and applies to more than just DOM
+  renderers, like React Native. For this talk, I'll just call it the Virtual
+  DOM. What it does is take our functions and state and display the appropriate
+  output in two steps.
+</Notes>
+
+---
+
+# Render Phase
+
+// Show render phase picture here.
+
+<Notes>
+  The render phase is the part that executes our code. When our app first
+  executes, it creates a virtual representation of the output of our code. This
+  is the virtual DOM.
+</Notes>
+
+---
+
+# Commit Phase
+
+// Show commit phase picture here
+
+<Notes>
+  The commit phase takes the virtual representation of our app and performs the
+  necessary actions to reflect it on the DOM. For the first render, it just
+  outputs it wholesale. For every subsequent render, it compares the virtual DOM
+  to the actual DOM and surgically updates the DOM, limiting the number of
+  updates needed. This was the original selling point of React.
+</Notes>
+
+---
+
+# Render Blocking
+
+// Show a gif of some kind of render-blocking UI
+
+<Notes>
+  There was a problem with the original implementation, though. It's a problem
+  inherent in JavaScript. You can only execute one thread at a time, which means
+  your renders can become blocked by long-running execution. This gif shows
+  entering text in an input field being blocked by a heavy calculation, making
+  the UI janky. We have to get around this with debounces. That solves the
+  problem, but could it be better?
+</Notes>
+
+---
+
+# Async Waiting
+
+// Somethign about waiting for async stuff to arrive and problems surrounding that.
+
+---
+
+# Class Methods
+
+- componentWillMount
+- componentWillUpdate
+- componentWillReceiveProps
+
+<Notes>
+  This makes certain class methods really predictable, like componentWillMount
+  and componentWillReceiveProps. Since the component only mounts and updates
+  once, we can be confident the actions that are performed in these methods are
+  idempotent. Why is this important? I'll get to that later.
+</Notes>
+
+---
+
+# Fiber
+
+- Pause work and come back to it later.
+- Assign priority to different types of work.
+- Reuse previously completed work.
+- Abort work if it's no longer needed.
+
+<Notes>
+  The React Fiber rewrite was completed in 2017 with the goal of making it
+  easier to solve some of these issues while adding new features (Yay error
+  boundaries!). Fiber was a crucial step towards making Concurrent mode
+  possible, since React needed the ability to shift around units of work as data
+  requirements and priorities changed.
+</Notes>
+
+---
+
+# How Fiber works
+
+// Some graphic showing individual units of work
+
+<Notes>
+  Fiber is able to get around the single-threaded nature of JavaScript by
+  breaking the app tree out into individual components. Each of these components
+  is an isolated function, a unit of work. When the app re-renders, the
+  components that need to be evaluated are added to a queue and processed one at
+  a time in a non-blocking way. Then, when some kind of change happens, such as
+  a high-priority update or a thrown error, the queue is re-ordered so the
+  urgent change is reflected.
+</Notes>
+
+---
+
+# Unsafe Class Methods
+
+- UNSAFE_componentWillMount
+- UNSAFE_componentWillUpdate
+- UNSAFE_componentWillRecieveProps
+
+<Notes>
+  Now that components might update multiple times before they are "committed",
+  we can no longer count on these class lifecycle methods. We can still use
+  them, but sometimes they might be executed twice before the component even
+  hits the page, which might mean multiple network requests are fired or
+  unexpected things happen to our component's state. This is why these class
+  methods are now labeled 'unsafe'. Avoid using them.
+</Notes>
+
+---
+
+# Concurrent Mode
+
+- Opt-in
+- Interruptable Rendering, or Time Slicing
+- Intentional Loading Sequences, or Suspense
+- More opinionated (but for the better)
+
+<Notes>
+  That said, if you follow the rules, you get a lot of great benefits from
+  Concurrent mode. This is a special new mode of React, currently only available
+  in an experimental build, that you will opt into to activate concurrent super
+  powers in your app. This includes interruptable rendering, or Time Slicing,
+  which is enabled by default and should work out of the box. Intentional
+  loading sequences, or Suspense, is a bit more nuanced and requires more
+  attention from library authors and developers. However, with enough care and
+  attention, it can help you create great user experiences and even improve your
+  developer experience. Also, with all of these new features, the React team has
+  built subtle opinions into the framework that affect how things are displayed.
+</Notes>
+
+---
+
+# Demos
+
+- Enabling Concurrent Mode
+- Time Slicing
+- Suspense for Data Fetching
+- SuspenseList
+- useTransition
+
+<Notes>Let's look at some demos that show off how Concurrent mode works.</Notes>
+
+---
+
+# Demo
+
+---
+
+# More Features
+
+- Streaming SSR & prioritized hydration
+- Prerendering
+- useDeferredValue
+- Scheduler Primitives
+
+<Notes>
+  Concurrent mode gives us even more features that I can't demo today. Streaming
+  SSR and prioritized hydration allow you to stream markup and code to browsers
+  as it's being server-side rendered, giving priority to areas of the page which
+  the user is trying to interact with. This improves Time to First Paint and
+  Time To Interactive metrics. You can also pre-render and preload components
+  without affecting the UI. By placing those components at a lower priority, the
+  rest of the page will render before React even touches them. Then when it has
+  time, it will load and render those components so they appear quickly when
+  needed. useDeferredValue is a new built-in hook that allows you to better
+  orchestrate Suspense behaviors to keep the UI fast while data is loading, and
+  scheduler primitives allow you to specifically say which updates are important
+  and which are lower priority.
+</Notes>
+
+---
+
+# Pitfalls
+
+- String Refs
+- Legacy Context
+- ReactDOM.findDOMNode
+- UNSAFE class methods
+
+<Notes>
+  As I mentioned before, there are things that prohibit you from using
+  Concurrent mode. Those include string refs, using legacy context, the
+  ReactDOM.findDOMNode method, and unsafe class methods.
+</Notes>
+
+---
+
+# React.StrictMode
+
+- No impact on Production
+- Checks for Pitfalls
+- Double-invokes lifecycle methods to surface side-effect bugs
+
+<Notes>
+  There is a built-in React component called Strict Mode which you can wrap
+  around your component tree, or even parts of the tree, to have React tell you
+  what problems it discovers. This can help you prepare to activate Concurrent
+  mode. You absolutely should start using this component right away, even if
+  there are many problems that can't be solved right away.
+</Notes>
+
+---
+
+# Blocking Mode
+
+// Show the table which shows all the features available in each of the modes
+
+<Notes>
+  There is a intermediary blocking mode which you can enable which gives you
+  some of the benefits of concurrent mode without being too unsafe. This is a
+  good way to get started as you begin migrating your app to concurrent mode.
+</Notes>
+
+---
+
+# Just Use Hooks
+
+# 👍
+
+<Notes>
+  Also, if you start using React Hooks, you can prepare to take advantage of
+  useTransition and useDeferredValue, as well as avoid problems that might come
+  with unsafe class methods.
+</Notes>
+
+---
+
+# When can I use Concurrent Mode?
+
+- Currently experimental
+- InstUI isn't Concurrent mode ready
+-
+
+---
+
+<div style={{textAlign:"center"}}>
+
+## Thanks 🙌
+
+<https://ralexanderson.com>
+
+<https://twitter.com/ralex1993>
+
+<https://github.com/alexanderson1993>
+
+<https://ralexanderson.com/decks/react-concurrent-mode/>
+
+</div>
+
+---
+
 - Overview of React
   - Virtual DOM
   - Reconciler

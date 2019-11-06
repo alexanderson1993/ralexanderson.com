@@ -39,10 +39,6 @@ const wrapper = props => {
         pre {
           font-size: 2rem;
         }
-        p {
-          width: 100%;
-          height: 100%;
-        }
         img {
           max-height: 90vh;
         }

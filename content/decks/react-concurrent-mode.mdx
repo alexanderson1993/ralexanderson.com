@@ -12,7 +12,7 @@ import { Head, Split, Notes } from "gatsby-theme-mdx-deck"
 
 ---
 
-// Show React Logo Here
+![React](/concurrent-mode/react.svg)
 
 # Overview of React
 
@@ -37,7 +37,7 @@ import { Head, Split, Notes } from "gatsby-theme-mdx-deck"
 
 # Virtual <del>DOM</del> Tree
 
-// Show virtual dom picture Here
+![Virtual DOM](/concurrent-mode/virtual-dom.svg)
 
 <Notes>
   One of the biggest innovations of React is the virtual dom. It is a misnomer,
@@ -51,7 +51,7 @@ import { Head, Split, Notes } from "gatsby-theme-mdx-deck"
 
 # Render Phase
 
-// Show render phase picture here.
+![Render Phase](/concurrent-mode/render-phase.svg)
 
 <Notes>
   The render phase is the part that executes our code. When our app first
@@ -63,7 +63,7 @@ import { Head, Split, Notes } from "gatsby-theme-mdx-deck"
 
 # Commit Phase
 
-// Show commit phase picture here
+![Commit Phase](/concurrent-mode/commit-phase.svg)
 
 <Notes>
   The commit phase takes the virtual representation of our app and performs the
@@ -77,7 +77,9 @@ import { Head, Split, Notes } from "gatsby-theme-mdx-deck"
 
 # Render Blocking
 
-// Show a gif of some kind of render-blocking UI
+![Render Blocking](/concurrent-mode/time-slicing.gif)
+
+https://react-timeslicing-demo.netlify.com/
 
 <Notes>
   There was a problem with the original implementation, though. It's a problem
@@ -92,21 +94,18 @@ import { Head, Split, Notes } from "gatsby-theme-mdx-deck"
 
 # Async Waiting
 
-// Somethign about waiting for async stuff to arrive and problems surrounding that.
+## Count the Placeholders
 
----
+![Loading Placeholder](/concurrent-mode/placeholder.gif)
 
-# Class Methods
-
-- componentWillMount
-- componentWillUpdate
-- componentWillReceiveProps
+https://twitter.com/acdlite/status/991503599246098432
 
 <Notes>
-  This makes certain class methods really predictable, like componentWillMount
-  and componentWillReceiveProps. Since the component only mounts and updates
-  once, we can be confident the actions that are performed in these methods are
-  idempotent. Why is this important? I'll get to that later.
+  There are also improvements that can be made to loading. If you take a look at
+  this Facebook ad manager page, there are all kinds of loading spinners on
+  there, coming in and leaving as data is requested and eventually loaded. It's
+  a mess. It's possible to use fancy JavaScript to orchestrate all of these
+  components coming and going, but certainly there is a simpler way.
 </Notes>
 
 ---
@@ -130,7 +129,9 @@ import { Head, Split, Notes } from "gatsby-theme-mdx-deck"
 
 # How Fiber works
 
-// Some graphic showing individual units of work
+![Fiber](/concurrent-mode/fiber.png)
+
+https://www.youtube.com/watch?v=ZCuYPiUIONs
 
 <Notes>
   Fiber is able to get around the single-threaded nature of JavaScript by
@@ -139,7 +140,9 @@ import { Head, Split, Notes } from "gatsby-theme-mdx-deck"
   components that need to be evaluated are added to a queue and processed one at
   a time in a non-blocking way. Then, when some kind of change happens, such as
   a high-priority update or a thrown error, the queue is re-ordered so the
-  urgent change is reflected.
+  urgent change is reflected. Since the rendering method is non-blocking, if the
+  priority queue changes, React can... React to that and process only what needs
+  to be rendered.
 </Notes>
 
 ---
@@ -151,12 +154,13 @@ import { Head, Split, Notes } from "gatsby-theme-mdx-deck"
 - UNSAFE_componentWillRecieveProps
 
 <Notes>
-  Now that components might update multiple times before they are "committed",
-  we can no longer count on these class lifecycle methods. We can still use
-  them, but sometimes they might be executed twice before the component even
-  hits the page, which might mean multiple network requests are fired or
-  unexpected things happen to our component's state. This is why these class
-  methods are now labeled 'unsafe'. Avoid using them.
+  This does mean that compnents might be executed multiple times before they are
+  finally committed to the dom. That's why these class lifecycle methods are
+  unsafe. We can no longer count on them executing in a predictable way. We can
+  still use them, but sometimes they might be executed twice before the
+  component even hits the page, which might mean multiple network requests are
+  fired or unexpected things happen to our component's state. This is why these
+  class methods are now labeled 'unsafe'. Avoid using them.
 </Notes>
 
 ---
@@ -202,6 +206,7 @@ import { Head, Split, Notes } from "gatsby-theme-mdx-deck"
 # More Features
 
 - Streaming SSR & prioritized hydration
+- Render while you Fetch
 - Prerendering
 - useDeferredValue
 - Scheduler Primitives
@@ -211,14 +216,25 @@ import { Head, Split, Notes } from "gatsby-theme-mdx-deck"
   SSR and prioritized hydration allow you to stream markup and code to browsers
   as it's being server-side rendered, giving priority to areas of the page which
   the user is trying to interact with. This improves Time to First Paint and
-  Time To Interactive metrics. You can also pre-render and preload components
-  without affecting the UI. By placing those components at a lower priority, the
-  rest of the page will render before React even touches them. Then when it has
-  time, it will load and render those components so they appear quickly when
-  needed. useDeferredValue is a new built-in hook that allows you to better
-  orchestrate Suspense behaviors to keep the UI fast while data is loading, and
-  scheduler primitives allow you to specifically say which updates are important
-  and which are lower priority.
+  Time To Interactive metrics. Rendering while you fetch is a pattern that also
+  improves how the page is loaded by avoiding waterfall dependency loading. You
+  can also pre-render and preload components without affecting the UI. By
+  placing those components at a lower priority, the rest of the page will render
+  before React even touches them. Then when it has time, it will load and render
+  those components so they appear quickly when needed. useDeferredValue is a new
+  built-in hook that allows you to better orchestrate Suspense behaviors to keep
+  the UI fast while data is loading, and scheduler primitives allow you to
+  specifically say which updates are important and which are lower priority.
+</Notes>
+
+---
+
+# Most of this will be handled by library authors
+
+<Notes>
+  The good news is a lot of these things will automatically be handled by
+  library authors. All you have to do is enable concurrent mode and use
+  compatible libraries.
 </Notes>
 
 ---
@@ -256,7 +272,7 @@ import { Head, Split, Notes } from "gatsby-theme-mdx-deck"
 
 # Blocking Mode
 
-// Show the table which shows all the features available in each of the modes
+![Feature Comparison](/concurrent-mode/features.png)
 
 <Notes>
   There is a intermediary blocking mode which you can enable which gives you
@@ -268,12 +284,43 @@ import { Head, Split, Notes } from "gatsby-theme-mdx-deck"
 
 # Just Use Hooks
 
-# 👍
+> Since then we’ve completed related work, such as the new Context API and the introduction of Hooks, which are designed in part to help developers naturally write code that is more compatible with Concurrent Mode.
+
+<cite>Joseph Savona</cite>
+
+<small>
+  <a href="https://reactjs.org/blog/2019/11/06/building-great-user-experiences-with-concurrent-mode-and-suspense.html">
+    https://reactjs.org/blog/2019/11/06/building-great-user-experiences-with-concurrent-mode-and-suspense.html
+  </a>
+</small>
 
 <Notes>
   Also, if you start using React Hooks, you can prepare to take advantage of
   useTransition and useDeferredValue, as well as avoid problems that might come
-  with unsafe class methods.
+  with unsafe class methods. Hooks were literally designed to help you avoid the
+  pitfalls of concurrent mode. Writing in hooks will help you not write bugs
+  that are easy to write with class components.
+</Notes>
+
+---
+
+# It's Just React
+
+> React Fiber is just React. React Suspense is just React. Concurrent Mode is just React. These monikers are useful to explain where we’re going and to refer to a feature before it ships. But they’re designed to fade away.
+
+<cite>
+  Dan Abramov (@dan_abramov){" "}
+  <a href="https://twitter.com/dan_abramov/status/1191859713627054080?ref_src=twsrc%5Etfw">
+    November 5, 2019
+  </a>
+</cite>
+
+<Notes>
+  An important thing to remember is this isn't a special new kind of React that
+  runs in parallel of the old React. It's the same React, just with new powers.
+  The plan is for all React apps to run in Concurrent mode eventually. And I'm
+  sure that once that happens, there will be even more improvements and benefits
+  that the React team can make.
 </Notes>
 
 ---
@@ -281,8 +328,18 @@ import { Head, Split, Notes } from "gatsby-theme-mdx-deck"
 # When can I use Concurrent Mode?
 
 - Currently experimental
-- InstUI isn't Concurrent mode ready
+- Only use Concurrent Mode compatible libraries. isn't Concurrent mode ready
 - Make sure your app is ready
+  - Use React.StrictMode
+  - Use Hooks
+
+<Notes>
+  At Instructure, we can't use InstUI yet. It's still experimental, and they
+  strongly recommend not using it in production. Also, make sure your app,
+  libraries and dependencies are concurrent mode compatible. You can check this
+  with React.StrictMode. Also, using hooks will help you avoid a host of
+  problems that might come with Concurrent mode.
+</Notes>
 
 ---
 
@@ -299,45 +356,5 @@ import { Head, Split, Notes } from "gatsby-theme-mdx-deck"
 <https://ralexanderson.com/decks/react-concurrent-mode/>
 
 </div>
-
----
-
-- Overview of React
-  - Virtual DOM
-  - Reconciler
-    - Render Phase
-    - Commit Phase
-  - Blocking Rendering
-  - Fiber
-    - https://techcrunch.com/2017/04/18/facebook-announces-react-fiber-a-rewrite-of-its-react-framework/
-    - https://github.com/acdlite/react-fiber-architecture
-  - Concurrent Mode
-    - Interruptable Rendering
-    - Intentional Loading Sequences
-    - Concurrently work on several state updates at the same time
-      - CPU-Bound: More urgent updates interrupt Rendering
-      - IO-Bound: Render UIs in-memory before data arrives.
-    - More opinionated
-  - Show Feature Comparison (https://reactjs.org/docs/concurrent-mode-adoption.html#feature-comparison) and then highlight the parts we'll be discussing in this talk
-  - Demos
-    - Blocking state updates
-    - Suspense for Data Fetching
-    - SuspenseList
-    - useTransition
-  - More cool stuff
-    - Streaming SSR
-    - Prerendering with `hidden` attribute
-    - useDeferredValue
-  - Pitfalls
-    - String Refs
-    - Legacy Context
-    - ReactDOM.findDOMNode
-    - unsafe Class Lifecycles
-      - unsafe, because the behaviors might not be idempotent, and sometimes lifecycle methods will run multiple times as part of a single "render" cycle
-  - Use React.StrictMode to discover problems.
-    - Don't impact Production at all.
-    - Checks for all of the above
-    - Double-invokes `constructor`, `render`, `setState`, and `getDerrivedStateFromProps` to surface any side-effect bugs.
-  - Use React Hooks - not as succeptable to side-effect bugs.
 
 ---

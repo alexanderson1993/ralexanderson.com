@@ -1,5 +1,5 @@
 ---
-title: "useInterpolate vs CSS Transitions"
+title: "2019 In Review"
 author: "Alex Anderson"
 category: "Life"
 cover: hero.jpg

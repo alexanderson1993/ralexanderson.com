@@ -147,34 +147,15 @@ https://www.youtube.com/watch?v=ZCuYPiUIONs
 
 ---
 
-# Unsafe Class Methods
-
-- UNSAFE_componentWillMount
-- UNSAFE_componentWillUpdate
-- UNSAFE_componentWillRecieveProps
-
-<Notes>
-  This does mean that compnents might be executed multiple times before they are
-  finally committed to the dom. That's why these class lifecycle methods are
-  unsafe. We can no longer count on them executing in a predictable way. We can
-  still use them, but sometimes they might be executed twice before the
-  component even hits the page, which might mean multiple network requests are
-  fired or unexpected things happen to our component's state. This is why these
-  class methods are now labeled 'unsafe'. Avoid using them.
-</Notes>
-
----
-
 # Concurrent Mode
 
-- Opt-in
+- Opt-in (Experimental Build only)
 - Interruptable Rendering, or Time Slicing
 - Intentional Loading Sequences, or Suspense
 - More opinionated (but for the better)
 
 <Notes>
-  That said, if you follow the rules, you get a lot of great benefits from
-  Concurrent mode. This is a special new mode of React, currently only available
+  Concurrent Mode is a special new mode of React, currently only available
   in an experimental build, that you will opt into to activate concurrent super
   powers in your app. This includes interruptable rendering, or Time Slicing,
   which is enabled by default and should work out of the box. Intentional
@@ -213,6 +194,11 @@ https://www.youtube.com/watch?v=ZCuYPiUIONs
    
 
 ---
+# MOAR PERFORMANCE!!!
+
+![React Three Fiber](/concurrent-mode/three-fiber.gif)
+
+---
 
 # More Features
 
@@ -240,23 +226,6 @@ https://www.youtube.com/watch?v=ZCuYPiUIONs
 
 ---
 
-# Most of this will be handled by library authors
-
-## (But you can use them if you want)
-
-* React Router
-* React Apollo
-* InstUI
-
-
-<Notes>
-  The good news is a lot of these things will automatically be handled by
-  library authors. All you have to do is enable concurrent mode and use
-  compatible libraries.
-</Notes>
-
----
-
 # Pitfalls
 
 - String Refs
@@ -268,6 +237,24 @@ https://www.youtube.com/watch?v=ZCuYPiUIONs
   As I mentioned before, there are things that prohibit you from using
   Concurrent mode. Those include string refs, using legacy context, the
   ReactDOM.findDOMNode method, and unsafe class methods.
+</Notes>
+
+---
+
+# Unsafe Class Methods
+
+- UNSAFE_componentWillMount
+- UNSAFE_componentWillUpdate
+- UNSAFE_componentWillRecieveProps
+
+<Notes>
+  Concurrent Mode mean that compnents might be executed multiple times before they are
+  finally committed to the DOM. That's why these class lifecycle methods are
+  unsafe. We can no longer count on them executing in a predictable way. We can
+  still use them, but sometimes they might be executed twice before the
+  component even hits the page, which might mean multiple network requests are
+  fired or unexpected things happen to our component's state. This is why these
+  class methods are now labeled 'unsafe'. Avoid using them.
 </Notes>
 
 ---
@@ -346,14 +333,15 @@ https://www.youtube.com/watch?v=ZCuYPiUIONs
 # When can I use Concurrent Mode?
 
 - Currently experimental
-- Only use Concurrent Mode compatible libraries. isn't Concurrent mode ready
-- Make sure your app is ready
+- Only use Concurrent Mode compatible libraries. 
+  - Incompatible stuff will throw errors, have bugs, and crash your app.
+- Make sure your app code is ready
   - Use React.StrictMode
   - Use Hooks
 
 <Notes>
-  At Instructure, we can't use InstUI yet. It's still experimental, and they
-  strongly recommend not using it in production. Also, make sure your app,
+ It's still experimental, and the React team
+  strongly recommends not using it in production. Also, make sure your app,
   libraries and dependencies are concurrent mode compatible. You can check this
   with React.StrictMode. Also, using hooks will help you avoid a host of
   problems that might come with Concurrent mode.

@@ -1,0 +1,76 @@
+import { Notes } from "gatsby-theme-mdx-deck"
+
+# ES 2020
+
+## The Future of JavaScript
+
+---
+
+# TC39
+
+> Ecma International's TC39 is a group of JavaScript developers, implementers, academics, and more, collaborating with the community to maintain and evolve the definition of JavaScript.
+
+---
+
+# 2020 Accepted Proposals
+
+- Optional Chaining
+- Nullish Coalescing
+- BigInt
+- `String.prototype.matchAll`
+- `Promise.allSettled`
+- `globalThis`
+- `import()`
+
+---
+
+# Optional Chaining
+
+## What it solves
+
+```JavaScript
+const nestedProperty =
+  data &&
+  data.layer1 &&
+  data.layer1.layer2 &&
+  data.layer1.layer2.nestedProperty;
+```
+
+---
+
+# Optional Chaining
+
+## How it works
+
+```JavaScript
+const nestedProperty = data?.layer1?.layer2?.nestedProperty;
+```
+
+---
+
+# Optional Chaining
+
+## Array Indicies & Computed Properties
+
+```JavaScript
+const nestedProperty = data?.layer1?.listOfStuff?.[5]?.nestedProperty;
+const nestedProperty2 = data?.layer1?.[somePropertyName]?.nestedProperty;
+```
+
+---
+
+# Optional Chaining
+
+## Function Calls
+
+```JavaScript
+const nestedProperty = data?.someFunction?.(arg1, arg2)
+```
+
+---
+
+# Optional Chaining
+
+## Availability
+
+![Optional Chaining](/es-2020/optional-chaining.jpg)

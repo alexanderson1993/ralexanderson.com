@@ -1,0 +1,37 @@
+---
+import { getCollection } from "astro:content";
+
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+import PostPreview from "../components/PostPreview.astro";
+import Hero from "../components/Hero.astro";
+import Grid from "../components/Grid.astro";
+
+const posts = (await getCollection("blog")).sort(
+	(a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
+);
+---
+
+<BaseLayout
+	title="The Blog | R. Alex Anderson"
+	description="See what Alex has written about recently"
+>
+	<div class="stack gap-20">
+		<main class="wrapper stack gap-8">
+			<Hero
+				title="The Blog"
+				tagline="See my most recent posts."
+				align="start"
+			/>
+			<Grid variant="offset">
+				{
+					posts.map((post) => (
+						<li>
+							<PostPreview post={post} />
+						</li>
+					))
+				}
+			</Grid>
+		</main>
+	</div>
+</BaseLayout>

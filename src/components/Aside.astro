@@ -1,0 +1,108 @@
+---
+export type Props = {
+	mode?: "info" | "warning" | "question";
+	title?: string;
+};
+
+const { mode = "info", title } = Astro.props;
+
+const modeStyles = {
+	info: "border-blue-500 bg-blue-500/20",
+	warning: "border-red-500 bg-red-500/20",
+	question: "border-yellow-500 bg-yellow-500/20",
+};
+
+const modeStyle = modeStyles[mode];
+
+const radius = 16;
+const DEG_TO_RAD = Math.PI / 180;
+const circle = Array.from({ length: 46 })
+	.fill(0)
+	.map((_, i) => {
+		const x = Math.cos(-1 * i * 2 * DEG_TO_RAD) * radius;
+		const y = Math.sin(i * 2 * DEG_TO_RAD) * radius;
+		return `${x}px ${y}px`;
+	})
+	.join(", ");
+const path = `polygon(${circle}, 0 100%, 100% 100%, 100% 0)`;
+const modeColor = mode;
+---
+
+<div class={`aside ${modeColor}`}>
+  <div class="icon">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+      stroke-width="2">
+      {mode === "question"?
+      <path stroke-linecap="round" stroke-linejoin="round"
+        d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      :mode==="info" ?
+      <path stroke-linecap="round" stroke-linejoin="round"
+        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      :
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      }
+    </svg>
+  </div>
+  <div class={`content ${modeStyle} py-2 px-8 my-8 rounded-r-lg`} style={`clip-path: ${path}; -webkit-clip-path:
+    ${path};`}>
+    {title && <p class="text-xl font-semibold text-black dark:text-white">{title}</p>}
+    <slot />
+  </div>
+</div>
+<style>
+  .aside {
+    position: relative;
+  }
+  .aside .icon {
+    position: absolute;
+    left: -1rem;
+    top: -1rem;
+  }
+  .icon svg {
+    height: 2.25rem;
+    width: 2.25rem;
+  }
+  .aside.info {
+    color: #287eff;
+    color: oklch(62.31% 0.219 259.81);
+  }
+  .aside.warning {
+    color: #ff001f;
+    color:oklch(63.68% 0.2904 25.33);
+  }
+  .aside.question {
+    color: #eab308;
+    color: oklch(79.52% 0.1861 86.05);
+  }
+  .aside .content {
+   border-left: solid 4px currentColor;
+   border-top-right-radius: 0.5rem;
+   border-bottom-right-radius: 0.5rem; 
+   margin-top: 2rem;
+   margin-bottom: 2rem;
+   padding-top: 0.5rem;
+   padding-bottom: 0.5rem;
+   padding-left: 2rem;
+   padding-right: 2rem;
+   color: var(--gray-200);
+  }
+  .aside.info .content {
+    border-left-color: #287eff;
+    border-left-color:oklch(62.31% 0.219 259.81);
+    background-color: #287eff11;
+    background-color:oklch(62.31% 0.219 259.81 / 0.1);
+  }
+  .aside.warning .content {
+    border-left-color: #ff001f;
+    border-left-color:oklch(63.68% 0.2904 25.33);
+    background-color: #ff001f11;
+    background-color:oklch(63.68% 0.2904 25.33 / 0.1);
+  }
+  .aside.question .content {
+    border-left-color: #eab308;
+    border-left-color:oklch(79.52% 0.1861 86.05);
+    background-color: #eab30811;
+    background-color:oklch(79.52% 0.1861 86.05 / 0.1);
+  }
+
+</style>

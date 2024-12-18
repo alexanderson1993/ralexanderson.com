@@ -39,6 +39,9 @@ const { Content } = await render(entry);
 								{entry.data.tags?.map((t) => <Pill>{t}</Pill>)}
 							</div>
 							<p class="description">{entry.data.description}</p>
+							<p class="publishDate">{entry.data.publishDate.toLocaleDateString("en-US",{  year: 'numeric',
+								month: 'long',
+								day: 'numeric',})}</p>
 						</div>
 					</Hero>
 				</div>

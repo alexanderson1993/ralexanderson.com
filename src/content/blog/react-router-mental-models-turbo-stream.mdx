@@ -1,0 +1,93 @@
+---
+title: React Router Mental Models - turbo-stream
+publishDate: Fri Jan 9 2025 00:00:00 GMT-0400 (Eastern Daylight Time)
+excerpt: React Router invisibly serializes responses from loaders to enable powerful data transfer over the wire.
+featureImage:
+  src: '/assets/blog/turbo-stream.jpg'
+  alt: 'A rollercoaster inversion with passengers mid-rotation. Above the rollercoaster is a large sign that says "Turbo"'
+---
+
+import Aside from '../../components/Aside.astro';
+
+HTTP is a text-based transfer protocol, which means anything we send over it needs to be serialized to some kind of text-based format, whether that be JSON, XML, SOAP, or something else. These days, if you're sending structured data, you're almost always using JSON.
+
+Alas, JSON can only send JavaScript primitives, arrays, and objects, which seriously limits what we can do with it. Fortunately, packages like [superjson](https://www.npmjs.com/package/superjson) and [devalue](https://github.com/rich-harris/devalue) use fancy serialization techniques to send more advanced data, like Dates, Maps, Sets, and regular expressions.
+
+React Router takes it a step further by using a package called [turbo-steam](https://github.com/jacob-ebey/turbo-stream) to send Promises over the wire, allowing you to await them on the other end. Sounds like magic, right?
+
+### How does turbo-stream work?
+
+The biggest difference between turbo-stream and the other serializers is what they spit out - instead of a raw string, turbo-stream returns a `ReadableStream` of the data. When the turbo-stream encoder is given data, it serializes everything it can right away and adds them to the stream. Any Promises are added by inserting a _reference_ into the stream.
+
+When the stream is decoded, those promise references are turned into new Promises that can be awaited. But note - the stream hasn't been closed yet. Until all the promises given to the encoder resolve, the stream remains open.
+
+As the promises resolve, the encoder appends the promise reference and results to the stream. When the decoder gets that reference and the results, it uses the reference to find the promise it created on its end, then resolves it with the results from the stream. This continues until all of the promises have resolved, when the encoder finally closes the stream.
+
+### Manually creating and consuming turbo-stream streams
+
+As it turns out, HTTP is _really_ good at streaming stuff. That's kind of its jam.
+
+In any Web Standards compatible server, you can pass the encoded stream directly to `new Response()`.
+
+```ts
+// Using node-fetch-server from https://github.com/mjackson/remix-the-web/tree/main/packages/node-fetch-server
+import * as http from 'node:http';
+import { createRequestListener } from '@mjackson/node-fetch-server';
+import { encode } from 'turbo-stream';
+
+function handler(request: Request) {
+  if (request.url === "/resource") {
+    return new Response({
+      time: new Date(),
+      promiseData: new Promise(resolve => setTimeout(() => resolve("Hi"), 1000))
+    })
+  }
+
+  // ... other response handlers
+}
+
+let server = http.createServer(createRequestListener(handler));
+
+server.listen(3000);
+```
+
+Then, in the browser you can directly decode the response body.
+
+```ts
+import { decode } from 'turbo-stream';
+
+const resourceResponse = await fetch('/resource');
+
+const decoded = await decode(resourceResponse.body);
+
+const time = decoded.value.time;
+
+// Await a Promise from the resource route response
+const streamedData = await decoded.value.promiseData;
+
+// Wait for the stream to finish
+await decoded.done;
+```
+
+### turbo-stream in React Router
+
+<Aside mode="info">
+turbo-stream is an implementation detail of React Router. It's unlikely to change substantially, but it is not directly documented and its behavior might change.
+</Aside>
+
+Since turbo-stream is built directly into React Router, it will _just work_ with whatever data you return in a JavaScript object from loaders and actions, including Promises, arrays of Promises, Dates, Maps, Sets, and all the other data types that turbo-stream supports.  That's how [React Router's streaming works](https://reactrouter.com/how-to/suspense). And this works for any React Router API, including `useFetcher`.
+
+There might be times you need to include headers or status codes in your loader or action response - for that you can use the [data](https://reactrouter.com/how-to/headers#1-wrap-your-return-value-in-data) helper.
+
+There is a big asterisk here - this behavior also applies to Resource Routes. If your resource routes are being consumed outside of your React Router application, such as for an external API endpoint or webhook, you'll want to opt-out of turbo-stream. Fortunately, returning  `Response.json` or `new Response()` with the `Content-Type` header will skip the turbo-stream encoding step.
+
+<Aside mode="warning">
+
+React Router adds its own plugins and extensions to the turbo-stream encoder and decoder, so if you're going to use `turbo-stream` directly in your React Router resource routes, make sure you use it on the encoding and decoding side.
+
+</Aside>
+
+### turbo-stream with clientLoader and clientAction
+
+When a clientLoader calls `serverLoader()`, the turbo-stream response has already been decoded, so you can `await` Promises from the server right there in the clientLoader. Likewise, you don't have to do anything special with promises or other data types in clientLoader or clientAction - you can just return them and they'll be consumed correctly in the route component.
+

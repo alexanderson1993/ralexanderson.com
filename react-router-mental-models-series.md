@@ -1,0 +1,8 @@
+- Resource Routes
+- Storing intermediate state in sessions
+- How revalidation happens
+- Headers - headers export, `set-cookie`
+- Handling Form data - conform and remix-hook-form
+- Progressive enhancement vs client-side JavaScript
+- Adding capabilities via Vite - common stuff handled with Vite vs handled by React Router
+- Caching - Request caching to imitate middleware

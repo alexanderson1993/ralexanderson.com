@@ -1,0 +1,125 @@
+---
+title: React Router Mental Models - Intermediate Sessions
+publishDate: Fri Jan 9 2025 00:00:01 GMT-0400 (Eastern Daylight Time)
+excerpt: Sessions allow you to store intermediate state across requests and browser reloads.
+featureImage:
+  src: "/assets/blog/intermediate-session.jpg"
+  alt: "A recording studio with two cardioid microphones pointed towards a pop filter."
+---
+
+import Aside from "../../components/Aside.astro";
+
+[Cookies]('/blog/react-router-mental-models-cookies') provide the backbone of React Router's [Sessions](https://reactrouter.com/explanation/sessions-and-cookies) abstraction. Sessions are mostly used for auth, but there's no reason they can't be used for any other server state.
+
+The important thing to remember is that session are keyed by the browser. They work great for state that is relevant to a specific browsing session, but not so good if you want that state to be consistent between two different browsers or devices.
+
+Suppose you have a form that you want to split between different routes. You want to make it easy to go back and forth between the different pages, while retaining all of the form state as you navigate.
+
+You could store it in browser storage, like `sessionStorage`. Sessions and cookies have a few advantages though:
+
+- They can persist between browser sessions, like `localStorage`.
+- They can expire after a certain time, like `sessionStorage`.
+- They work before JavaScript has loaded.
+
+To start, we'll need to create our session. We'll use [Zod](https://zod.dev) to provide validation and type safety.
+
+```ts
+import { createCookieSessionStorage } from "react-router";
+import { z } from "zod";
+
+// The fields are all optional since the form might be in an incomplete state
+// at any given point of the multi-step process.
+export const multiStepSchema = z.object({
+  projectId: z.string().optional(),
+  title: z.string().optional(),
+  description: z.string().optional(),
+});
+
+export const multiStepSession = createCookieSessionStorage<
+  z.infer<typeof multiStepSchema>
+>({
+  cookie: {
+    name: "multi_step_session",
+    sameSite: "lax",
+    path: "/",
+    httpOnly: true,
+    secrets: String(process.env.MULTI_STEP_SECRET).split(","),
+    secure: process.env.NODE_ENV === "production", // enable this in prod only
+  },
+});
+```
+
+If you want, you can include an `Max-Age` on the cookie so the browser forgets about this form if it hasn't been updated in a while.
+
+Then we'll write a helper for getting the session data.
+
+```ts
+export async function getMultiStepSession(request: Request) {
+  const session = await multiStepSession.getSession(
+    request.headers.get("Cookie")
+  );
+
+  const data = multiStepSchema.safeParse(multiStepSession.data);
+
+  return [data, session] as const;
+}
+```
+
+Now we can write a loader which reads the session data and returns the values that are relevant to that step of the form. You can use those values to fill in the `defaultValue` for all of the inputs in this page of the form.
+
+```ts
+// /routes/step-1.tsx
+import type { Route } from "./+types/step-1";
+import { getMultiStepSession } from "~/utils/multiStepSession";
+
+export async function loader({ request }: Route.LoaderArgs) {
+  const [multiStepFormData] = await getMultiStepSession(request);
+
+  return json({
+    projectId: multiStepFormData?.projectId,
+  });
+}
+```
+
+<Aside mode="info">
+
+We'll leave the creation of the form as an exercise for the reader.
+
+</Aside>
+
+We'll also need an action to update our session when we submit the form for a page.
+
+```ts
+// /routes/step-1.tsx
+import type { Route } from "./+types/step-1";
+import {
+  getMultiStepSession,
+  multiStepSession,
+} from "~/utils/multiStepSession";
+
+export async function action({ request }: Route.ActionArgs) {
+  const formData = await request.formData();
+  const [, session] = await getMultiStepSession(request);
+
+  session.set("projectId", formData.get("projectId"));
+
+  throw redirect("/step-2", {
+    headers: { "Set-Cookie": await multiStepSession.commitSession(session) },
+  });
+}
+```
+
+<Aside mode="info">
+
+If you wanted, you could use more sophisticated server-side form validation, like [Conform](https://conform.guide) or [Remix Hook Form](https://github.com/forge42dev/remix-hook-form).
+
+</Aside>
+
+Repeat for the remaining pages of your multi-step form. Then, on the final page, instead of updating your session, you'll pull out all the data and store it more permanently in your database.
+
+A few things to think about:
+
+- Make sure you delete the session after saving it so the user doesn't accidentally submit a duplicate of the form data.
+- Likewise, provide a way for the user to clear everything and start over.
+- Breadcrumbs are a handy UI to let the user see where they are in the form submission process and jump back to a previous step.
+- You might want to detect if session is empty and automatically redirect the user to the first step if they try to visit the pages for one of the later steps.

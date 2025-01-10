@@ -1,5 +1,4 @@
 - Resource Routes
-- Storing intermediate state in sessions
 - How revalidation happens
 - Headers - headers export, `set-cookie`
 - Handling Form data - conform and remix-hook-form

@@ -1,0 +1,53 @@
+---
+title: React Router Mental Models - Cookies
+publishDate: Fri Jan 9 2025 00:00:00 GMT-0400 (Eastern Daylight Time)
+excerpt: Cookies add state to stateless HTTP requests. React Router adds extra security and convenience.
+featureImage:
+  src: '/assets/blog/cookies.jpg'
+  alt: 'A grid of baked chocolate chip cookies sitting on a marble countertop.'
+---
+
+[Cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies) are the web's answer to adding state to the stateless HTTP protocol. Depending on how the cookie is set up, browsers or servers can both add and read data from cookies which can be read by the other during the request/response roundtrip.
+
+Every request, the browser finds the cookies that have been set that correspond to the current domain and path and send them as HTTP headers to the server. The server can read the cookie header, and then return a `Set-Cookie` header in the response, which the browser can store.
+
+Cookies have a lot of security and tracking prevention built in, like the `Secure` attribute to only send the cookie over HTTPS connections to prevent man-in-the-middle attacks, the `HttpOnly` attribute which prevents the browser from reading or writing to the cookie to avoid cross-site scripting attacks, and special prefixes, like `__Host-` and `__Secure-`, which ensure cookies have a secure configuration. If a server tries to set a prefixed cookie without the right settings, the browser will ignore it and not set the cookie.
+
+As a rule of thumb, _most_ cookies should include `Secure; HttpOnly; SameSite=Lax; Path=/;` along with a reasonable `Max-Age`. The only lets the browser set the cookie, and the cookie can only be read on the domain that set it, even excluding subdomains. But `Path=/;` allows the cookie to be read on any of the paths of that domain.
+
+Naturally, if the data doesn't need to be secured, it doesn't need the extra security. There's nothing wrong with omitting `HttpOnly;` if you want to update the dark mode cookie using JavaScript. At the same time, always using extra secure cookies means you're less likely to slip up on configuring your cookie when it actually matters.
+
+There's one more trick we can use to keep our cookies secure: signing them on the server. React Router makes this easy.
+
+### Signing Cookies
+ 
+When using React Router's `createCookie` utility, you have the option to [include a `secrets` array](https://reactrouter.com/explanation/sessions-and-cookies#signing-cookies), which tells the server to cryptographically sign and verify the cookie whenever its written or read.
+
+```ts
+const cookie = createCookie("user-prefs", {
+  secrets: ["s3cret1"],
+});
+```
+ 
+Suppose I serialized a value using that signed cookie. You can see that here:
+
+```
+eyJ1c2VyIjoxfQ%3D%3D.VvtVpSQ0kTqSu1pkz9luocuCMPRiKGR%2FMFtpobsOIHA
+```
+
+This is the auth token for one of my websites. It's split into two parts, separated by a `.`. The first is the base64 encoded contents of the session, which you can decode and read all you want. 
+
+The second part is a cryptographic signature, generated using the contents and my websites secret key. If you had that secret key, you could sign the contents again and compare it to the signature in the cookie to know that the cookie hasn't been tampered with.
+
+This provides an added level of protection against HTTP headers spoofing - unless an attacker managed to get your secret key, there's no way they could forge a cookie.
+
+[Sessions](https://reactrouter.com/explanation/sessions-and-cookies) provide a nice abstraction on top of cookies, and are well documented in the React Router docs. I'd recommend reading that page from top to bottom to better understand when and how to use sessions.
+
+In short, a session connects some data to a cookie. That data could be stored inside the cookie, or the cookie could contain a reference to a record somewhere else, like in a database or key-value store. Aside from that, along with a few API helpers like `.flash()`, they're just fancy cookies.
+
+You might wonder when you should use a regular cookie session vs storing the session in a database or KV store. Like always, it's tradeoffs:
+
+- Cookie sessions can be read instantly, but cookies have a [size limit](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#data_storage).
+- File-based sessions, including SQLite-backed database sessions, work well for single server instances, but wouldn't work if your app is serverless or has more than one instance, since the session only exists on a single instance.
+- Database or KV sessions can store a lot of data and be accessed by multiple server instances, but add a degree of latency every time you read a session from the remote server.
+

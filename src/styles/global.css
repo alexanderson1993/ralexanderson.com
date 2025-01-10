@@ -160,6 +160,11 @@ a {
   color: var(--link-color);
 }
 
+p,
+li {
+  font-size: var(--text-base);
+}
+
 h1,
 h2,
 h3,
@@ -189,6 +194,14 @@ h4 {
 
 h5 {
   font-size: var(--text-xl);
+}
+
+.content ul {
+  margin-left: 1rem;
+}
+.content ul li {
+  list-style-type: disc;
+  margin-bottom: 0.5rem;
 }
 
 /* Utilities */

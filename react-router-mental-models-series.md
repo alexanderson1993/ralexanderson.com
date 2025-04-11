@@ -5,3 +5,5 @@
 - Progressive enhancement vs client-side JavaScript
 - Adding capabilities via Vite - common stuff handled with Vite vs handled by React Router
 - Caching - Request caching to imitate middleware
+- KV - what it is and when to use it.
+- Environment variables - keeping secrets, dev vs prod, VITE\_

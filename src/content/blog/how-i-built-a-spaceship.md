@@ -3,7 +3,7 @@ title: "How to Build A Space Ship"
 publishDate: 2018-12-08
 excerpt: Have you ever wanted to build your own spaceship simulator? Let me explain all the parts that went into building my own simulator in Utah.
 featureImage:
-  src: '/assets/blog/spaceship/hero.png'
+  src: "/assets/blog/spaceship/hero.jpg"
 ---
 
 I make it no secret that I have a strange hobby. People are always either impressed, surprised, or confused when I describe to them what I enjoy doing in my spare time. It's not like it's that different from other hobbies which people have; some people make models of trains; some people made digital models of real-life systems.
@@ -233,5 +233,3 @@ Interested in playing with Thorium? [Check it out!](https://thoriumsim.com).
 Enjoy!
 
 ![Logo](/assets/blog/spaceship/logo.png)
-
-
